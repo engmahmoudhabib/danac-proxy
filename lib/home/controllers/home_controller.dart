@@ -5,16 +5,17 @@ import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/home/models/cart_item_response_model.dart';
+import 'package:storeapp/home/models/orders_response_model.dart';
 import 'package:storeapp/home/models/search_products_response_model.dart';
 import 'package:storeapp/home/models/special_products_response_model.dart';
 import 'package:storeapp/home/providers/cart_provider.dart';
+import 'package:storeapp/home/providers/orders_provider.dart';
 import 'package:storeapp/home/providers/products_provider.dart';
 import 'package:storeapp/home/views/screens/agent_home_screen.dart';
 import 'package:storeapp/home/views/screens/agent_products_screen.dart';
 import 'package:storeapp/home/views/screens/home_screen.dart';
 import 'package:storeapp/home/views/widgets/add_to_cart_successfuly_dialog.dart';
 import 'package:storeapp/home/views/widgets/order_success_dialog.dart';
-
 import 'package:storeapp/notifications/views/screens/notifications_screen.dart';
 import 'package:storeapp/settings/views/screens/settings_screen.dart';
 
@@ -34,8 +35,10 @@ class HomeController extends GetxController {
   RxList allProducts = <SearchlProductsResponseModel>[].obs;
   RxList searchProducts = <SearchlProductsResponseModel>[].obs;
   RxList cartItems = <GetCartItemsResponseModel>[].obs;
+  RxList orders = <OrdersResponseModel>[].obs;
   final ProductsProvider _productsProvider = ProductsProvider();
   final CartProvider _cartProvider = CartProvider();
+  final OrderProvider _orderProvider = OrderProvider();
 
   getSpecialProducts() async {
     isLoading.value = true;
@@ -115,6 +118,7 @@ class HomeController extends GetxController {
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       Navigator.pop(Get.overlayContext!, true);
+      getOrders();
       orderSuccessDialog(context);
     } else if (response.isRight()) {
       Get.defaultDialog(
@@ -204,6 +208,27 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
+  getOrders() async {
+    final response = await _orderProvider.getOrders();
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      orders.clear();
+      orders.addAll(result!);
+      orders.refresh();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+          title: 'error'.tr,
+          content: Text(
+            'please_try_again'.tr,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ));
+    }
+  }
+
   List<Widget> buildScreens() {
     return GetStorage().read('env') == 'agent'
         ? [
@@ -268,6 +293,7 @@ class HomeController extends GetxController {
     if (GetStorage().read('env') == 'agent') {
       getSpecialProducts();
       getProductsByCategory(0);
+      getOrders();
     }
 
     super.onInit();

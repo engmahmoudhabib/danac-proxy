@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -14,15 +15,7 @@ class AgentProductsScreen extends StatelessWidget {
         elevation: 5,
         centerTitle: true,
         backgroundColor: Colors.white,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
-        ),
+     
         title: Text(
           'products'.tr,
           style: TextStyle(
@@ -36,50 +29,399 @@ class AgentProductsScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Obx(
-          () => controller.isLoading.value == true
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.red,
-                  ),
-                )
-              : SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.68,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              child: AnimationLimiter(
-                                child: GridView.count(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 5 / 2,
-                                  children: List.generate(
-                                    controller.allProducts.length,
-                                    (int index) {
-                                      return AnimationConfiguration
-                                          .staggeredGrid(
-                                        position: index,
-                                        duration:
-                                            const Duration(milliseconds: 375),
-                                        columnCount: 2,
-                                        child: ScaleAnimation(
-                                          child: FadeInAnimation(
-                                            child: InkWell(
-                                              onTap: () {},
-                                              child: Card(
-                                                elevation: 5,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0),
-                                                ),
-                                               child: Text(controller.allProducts.length.toString()),
+          () => DefaultTabController(
+            length: 3,
+            child: new Scaffold(
+              appBar: new AppBar(
+                backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                elevation: 0,
+                flexibleSpace: new Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    new TabBar(
+                      indicatorColor: Colors.black,
+                      onTap: (value) {
+                        controller.getProductsByCategory(value);
+                      },
+                      indicatorPadding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                      ),
+                      tabs: [
+                        Text(
+                          'food'.tr,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          'drinks'.tr,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          'others'.tr,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              body: TabBarView(
+                children: [
+                  controller.isLoading.value == true
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.red,
+                          ),
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.68,
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: AnimationLimiter(
+                              child: GridView.count(
+                                crossAxisCount: 3,
+                                childAspectRatio: 11 / 18.5,
+                                children: List.generate(
+                                  controller.allProducts.length,
+                                  (int index) {
+                                    return AnimationConfiguration.staggeredGrid(
+                                      position: index,
+                                      duration:
+                                          const Duration(milliseconds: 375),
+                                      columnCount: 2,
+                                      child: ScaleAnimation(
+                                        child: FadeInAnimation(
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: Card(
+                                              elevation: 5,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height: 150,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      child: Image.network(
+                                                        controller
+                                                            .allProducts[index]
+                                                            .image,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  FadeInLeft(
+                                                    child: SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.29,
+                                                      height: 31,
+                                                      child: ElevatedButton(
+                                                        onPressed: () {},
+                                                        child: Text(
+                                                          'add_to_cart'.tr,
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                        style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(
+                                                                      AppColors
+                                                                          .red),
+                                                          shape: MaterialStateProperty
+                                                              .all<
+                                                                  RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              side: BorderSide(
+                                                                color: AppColors
+                                                                    .red,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
                                         ),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
+                          ),
+                        ),
+                  controller.isLoading.value == true
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.red,
+                          ),
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.68,
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: AnimationLimiter(
+                              child: GridView.count(
+                                crossAxisCount: 3,
+                                childAspectRatio: 11 / 18.5,
+                                children: List.generate(
+                                  controller.allProducts.length,
+                                  (int index) {
+                                    return AnimationConfiguration.staggeredGrid(
+                                      position: index,
+                                      duration:
+                                          const Duration(milliseconds: 375),
+                                      columnCount: 2,
+                                      child: ScaleAnimation(
+                                        child: FadeInAnimation(
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: Card(
+                                              elevation: 5,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height: 150,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      child: Image.network(
+                                                        controller
+                                                            .allProducts[index]
+                                                            .image,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  FadeInLeft(
+                                                    child: SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.29,
+                                                      height: 31,
+                                                      child: ElevatedButton(
+                                                        onPressed: () {},
+                                                        child: Text(
+                                                          'add_to_cart'.tr,
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                        style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(
+                                                                      AppColors
+                                                                          .red),
+                                                          shape: MaterialStateProperty
+                                                              .all<
+                                                                  RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              side: BorderSide(
+                                                                color: AppColors
+                                                                    .red,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                  controller.isLoading.value == true
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.red,
+                          ),
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.68,
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: AnimationLimiter(
+                              child: GridView.count(
+                                crossAxisCount: 3,
+                                childAspectRatio: 11 / 18.5,
+                                children: List.generate(
+                                  controller.allProducts.length,
+                                  (int index) {
+                                    return AnimationConfiguration.staggeredGrid(
+                                      position: index,
+                                      duration:
+                                          const Duration(milliseconds: 375),
+                                      columnCount: 2,
+                                      child: ScaleAnimation(
+                                        child: FadeInAnimation(
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: Card(
+                                              elevation: 5,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height: 150,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      child: Image.network(
+                                                        controller
+                                                            .allProducts[index]
+                                                            .image,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  FadeInLeft(
+                                                    child: SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.29,
+                                                      height: 31,
+                                                      child: ElevatedButton(
+                                                        onPressed: () {},
+                                                        child: Text(
+                                                          'add_to_cart'.tr,
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                        style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(
+                                                                      AppColors
+                                                                          .red),
+                                                          shape: MaterialStateProperty
+                                                              .all<
+                                                                  RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              side: BorderSide(
+                                                                color: AppColors
+                                                                    .red,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

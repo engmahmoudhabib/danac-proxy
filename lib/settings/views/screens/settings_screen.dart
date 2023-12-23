@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
+import 'package:storeapp/home/controllers/home_controller.dart';
 import 'package:storeapp/settings/views/screens/language_screen.dart';
 import 'package:storeapp/settings/views/widgets/logout_dialog.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
+  SettingsScreen({super.key});
+  HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return GetStorage().read('env') != 'agent'
@@ -151,11 +152,166 @@ class SettingsScreen extends StatelessWidget {
             ),
           )
         : Scaffold(
-            body: Column(
+            body: Obx(
+            () => Column(
               children: [
-                
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 130,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Card(
+                      elevation: 5,
+                      child: Center(
+                        child: ListTile(
+                          title: Text(
+                            'User Name',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'mahmoud@gmail.com',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          leading: Container(
+                            width: 100,
+                            height: 100,
+                            child: Icon(
+                              Icons.person,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: ListTile(
+                    title: Text(
+                      'my_points'.tr,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'my_loyality_points'.tr,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    trailing: RotationTransition(
+                      turns: AlwaysStoppedAnimation(180 / 360),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Divider(
+                    color: AppColors.red,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: ListTile(
+                    title: Text(
+                      'my_orders'.tr,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    subtitle: Text(
+                      Get.locale!.languageCode == 'ar'
+                          ? 'لديك ${controller.orders.length} طلبات مضافة في حسابك'
+                          : 'Vous avez ${controller.orders.length} commandes ajoutées à votre compte',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    trailing: RotationTransition(
+                      turns: AlwaysStoppedAnimation(180 / 360),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Divider(
+                    color: AppColors.red,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: ListTile(
+                    title: Text(
+                      'Settings'.tr,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'settings2'.tr,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    trailing: RotationTransition(
+                      turns: AlwaysStoppedAnimation(180 / 360),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Divider(
+                    color: AppColors.red,
+                  ),
+                )
               ],
             ),
-          );
+          ));
   }
 }

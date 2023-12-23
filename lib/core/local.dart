@@ -143,8 +143,15 @@ class MyLocale implements Translations {
           'cartt': 'السلة',
           'cart_empty': 'السلة فارغة',
           'order': 'الطلب',
-          'select_order_date': 'الرجاء تحديد وقت استلام الطلب' , 
-          'order_successfuly' :'تم إرسال طلبك'
+          'select_order_date': 'الرجاء تحديد وقت استلام الطلب',
+          'order_successfuly': 'تم إرسال طلبك',
+          'drinks': 'مشروبات',
+          'food': 'غذائيات',
+          'others': 'أخرى',
+          'my_points': 'نقاطي',
+          'my_loyality_points': 'نقاط الولاء الخاصة بي',
+          'settings2': 'اللغة, الإشعارات , الملف الشخصي',
+          'my_orders': 'طلباتي',
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -292,8 +299,17 @@ class MyLocale implements Translations {
           'cartt': 'Panier',
           'cart_empty': "Le panier est vide",
           'order': 'La demande',
-          'select_order_date': 'Veuillez préciser une heure pour recevoir la commande' , 
-          'order_successfuly' :'Votre demande à été envoyé'
+          'select_order_date':
+              'Veuillez préciser une heure pour recevoir la commande',
+          'order_successfuly': 'Votre demande à été envoyé',
+          'drinks': 'Boissons',
+          'food': 'diététique',
+          'others': 'Autre',
+          'my_points': 'Mes points',
+          'my_loyality_points': 'Mes points de fidélité',
+          'settings2': 'Langue, notifications, profil',
+          'my_orders': 'Mes commandes',
+          
         }
       };
 }
