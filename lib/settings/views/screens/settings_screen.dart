@@ -5,6 +5,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/home/controllers/home_controller.dart';
+import 'package:storeapp/home/views/screens/agent_settings_screen.dart';
+import 'package:storeapp/home/views/screens/my_orders_screen.dart';
+import 'package:storeapp/home/views/screens/my_points_screen.dart';
 import 'package:storeapp/settings/views/screens/language_screen.dart';
 import 'package:storeapp/settings/views/widgets/logout_dialog.dart';
 
@@ -206,6 +209,15 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ListTile(
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: MyPointsScreen(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.cupertino,
+                      );
+                    },
                     title: Text(
                       'my_points'.tr,
                       style: TextStyle(
@@ -241,6 +253,15 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ListTile(
+                    onTap: (){
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: MyOrdersScreen(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.cupertino,
+                      );
+                    },
                     title: Text(
                       'my_orders'.tr,
                       style: TextStyle(
@@ -278,6 +299,15 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ListTile(
+                    onTap: (){
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: AgentSettingsScreen(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.cupertino,
+                      );
+                    },
                     title: Text(
                       'Settings'.tr,
                       style: TextStyle(

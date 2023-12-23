@@ -60,8 +60,8 @@ class Client {
   String? phonenumber;
   String? category;
   String? notes;
-  Null? location;
-  int? totalPoints;
+  String? location;
+  double? totalPoints;
 
   Client(
       {this.id,
@@ -71,7 +71,7 @@ class Client {
       this.category,
       this.notes,
       this.location,
-      this.totalPoints});
+      this.totalPoints,});
 
   Client.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -81,7 +81,7 @@ class Client {
     category = json['category'];
     notes = json['notes'];
     location = json['location'];
-    totalPoints = json['total_points'];
+    totalPoints = double.parse( json['total_points'].toString());
   }
 
   Map<String, dynamic> toJson() {

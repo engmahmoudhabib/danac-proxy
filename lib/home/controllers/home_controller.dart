@@ -5,11 +5,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/home/models/cart_item_response_model.dart';
+import 'package:storeapp/home/models/order_response_model.dart';
 import 'package:storeapp/home/models/orders_response_model.dart';
+import 'package:storeapp/home/models/points_response_model.dart';
 import 'package:storeapp/home/models/search_products_response_model.dart';
 import 'package:storeapp/home/models/special_products_response_model.dart';
 import 'package:storeapp/home/providers/cart_provider.dart';
 import 'package:storeapp/home/providers/orders_provider.dart';
+import 'package:storeapp/home/providers/points_provider.dart';
 import 'package:storeapp/home/providers/products_provider.dart';
 import 'package:storeapp/home/views/screens/agent_home_screen.dart';
 import 'package:storeapp/home/views/screens/agent_products_screen.dart';
@@ -36,9 +39,12 @@ class HomeController extends GetxController {
   RxList searchProducts = <SearchlProductsResponseModel>[].obs;
   RxList cartItems = <GetCartItemsResponseModel>[].obs;
   RxList orders = <OrdersResponseModel>[].obs;
+  RxList points = <PointsResponseModel>[].obs;
   final ProductsProvider _productsProvider = ProductsProvider();
   final CartProvider _cartProvider = CartProvider();
   final OrderProvider _orderProvider = OrderProvider();
+  final PointsProvider _pointsProvider = PointsProvider();
+  RxList order = <OrderResponseModel>[].obs;
 
   getSpecialProducts() async {
     isLoading.value = true;
@@ -208,6 +214,55 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
+  getOrder(id) async {
+    isLoading.value = true;
+    final response = await _orderProvider.getOrder(id);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      order.clear();
+      order.add(result!);
+      order.refresh();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
+  getMyPoints(id) async {
+    isLoading.value = true;
+    final response = await _pointsProvider.getPoints(id);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      points.clear();
+      points.addAll(result!);
+      points.refresh();
+    
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
   getOrders() async {
     final response = await _orderProvider.getOrders();
     if (response.isLeft()) {
@@ -294,6 +349,7 @@ class HomeController extends GetxController {
       getSpecialProducts();
       getProductsByCategory(0);
       getOrders();
+      getMyPoints(9);
     }
 
     super.onInit();

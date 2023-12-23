@@ -152,6 +152,21 @@ class MyLocale implements Translations {
           'my_loyality_points': 'نقاط الولاء الخاصة بي',
           'settings2': 'اللغة, الإشعارات , الملف الشخصي',
           'my_orders': 'طلباتي',
+          'points': 'نقطة',
+          'points_expired': 'ستنتهي صلاحية النقاط في ',
+          'orders_num': 'عدد الطلبات',
+          'order_number': 'رقم الطلب',
+          'edit_profile_pic': 'تعديل الصورة الشخصية',
+          'order_num': 'رقم الطلب',
+          'order_data': 'بيانات الطلب',
+          'order_date': 'تاريخ الطلب',
+          'contact_info': 'بيانات الاتصال',
+          'order_details': 'تفاصيل الطلب',
+          'points_details': 'تفاصيل النقاط',
+          'categories_details': 'تفاصيل الفئات',
+          'how_to_use_my_points': 'كيف يمكنني أن أستخدم نقاطي ؟',
+          'what_to_do_with_my_points': 'ماذا يمكنني أن أفعل بنقاطي ؟' , 
+         
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -309,7 +324,20 @@ class MyLocale implements Translations {
           'my_loyality_points': 'Mes points de fidélité',
           'settings2': 'Langue, notifications, profil',
           'my_orders': 'Mes commandes',
-          
+          'points': 'Point',
+          'points_expired': 'Les points expireront le',
+          'orders_num': 'Nombre de demandes',
+          'order_number': 'Numéro de commande',
+          'edit_profile_pic': 'Modifier une photo personnelle',
+          'order_num': 'Numéro de commande',
+          'order_data': 'Demander des données',
+          'order_date': 'Date de la demande',
+          'contact_info': 'Données de contact',
+          'order_details': 'Détails de la commande',
+          'points_details': 'Détails des points',
+          'categories_details': 'Détails des catégories',
+          'how_to_use_my_points': 'Comment puis-je utiliser mes points ?',
+          'what_to_do_with_my_points': 'Que puis-je faire avec mes points ?'
         }
       };
 }
