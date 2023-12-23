@@ -164,12 +164,7 @@ class SpecialElementsScreen extends StatelessWidget {
                                                 )
                                               : ElevatedButton(
                                                   onPressed: () {
-                                                    controller.addToCart(
-                                                        controller
-                                                            .specialProducts[
-                                                                index]
-                                                            .id,
-                                                        context);
+                                                 
                                                   },
                                                   child: Text(
                                                     'add_to_cart'.tr,
@@ -300,12 +295,7 @@ class SpecialElementsScreen extends StatelessWidget {
                                                 )
                                               : ElevatedButton(
                                                   onPressed: () {
-                                                      controller.addToCart(
-                                                        controller
-                                                            .specialProducts[
-                                                                index]
-                                                            .id,
-                                                        context);
+                                                    
                                                   },
                                                   child: Text(
                                                     'add_to_cart'.tr,

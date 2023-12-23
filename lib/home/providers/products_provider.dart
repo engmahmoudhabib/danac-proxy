@@ -47,4 +47,30 @@ class ProductsProvider extends GetConnect {
       return Right('An error occurred: $e');
     }
   }
+
+  Future<Either<List<SearchlProductsResponseModel>, String?>>
+      getProductsByCategory(int type) async {
+    try {
+      final response = await get(
+        type == 0
+            ? API.productsURL + '?category=مشروبات'
+            : type == 1
+                ? API.productsURL + '?category=غذائيات'
+                : API.productsURL + '?category=أخرى',
+      );
+      if (response.status.isOk) {
+        Iterable l = response.body;
+        List<SearchlProductsResponseModel> res =
+            List<SearchlProductsResponseModel>.from(
+                l.map((model) => SearchlProductsResponseModel.fromJson(model)));
+        return Left(res);
+      } else {
+        print(response.body);
+        return Right(response.statusText);
+      }
+    } catch (e) {
+      print(e.toString());
+      return Right('An error occurred: $e');
+    }
+  }
 }

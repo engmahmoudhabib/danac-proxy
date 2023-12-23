@@ -139,9 +139,12 @@ class MyLocale implements Translations {
           'unit': 'الوحدة',
           'cartoon_price': 'سعر الكرتونة',
           'add_to_cart_successfuly': 'تم إضافة المنتج للسلة',
-          'back_to_browse' :'العودة للتصفح' , 
-          'cartt' :'السلة' , 
-          'cart_empty' :'السلة فارغة'
+          'back_to_browse': 'العودة للتصفح',
+          'cartt': 'السلة',
+          'cart_empty': 'السلة فارغة',
+          'order': 'الطلب',
+          'select_order_date': 'الرجاء تحديد وقت استلام الطلب' , 
+          'order_successfuly' :'تم إرسال طلبك'
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -285,9 +288,12 @@ class MyLocale implements Translations {
           'back': 'Dos',
           'cartoon_price': 'Prix du carton',
           'add_to_cart_successfuly': 'Le produit a été ajouté au panier',
-           'back_to_browse' :'Retour à la navigation' , 
-           'cartt' :'Panier' , 
-            'cart_empty' :"Le panier est vide"
+          'back_to_browse': 'Retour à la navigation',
+          'cartt': 'Panier',
+          'cart_empty': "Le panier est vide",
+          'order': 'La demande',
+          'select_order_date': 'Veuillez préciser une heure pour recevoir la commande' , 
+          'order_successfuly' :'Votre demande à été envoyé'
         }
       };
 }

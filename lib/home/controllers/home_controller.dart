@@ -11,9 +11,9 @@ import 'package:storeapp/home/providers/cart_provider.dart';
 import 'package:storeapp/home/providers/products_provider.dart';
 import 'package:storeapp/home/views/screens/agent_home_screen.dart';
 import 'package:storeapp/home/views/screens/agent_products_screen.dart';
-import 'package:storeapp/home/views/screens/cart_screen.dart';
 import 'package:storeapp/home/views/screens/home_screen.dart';
 import 'package:storeapp/home/views/widgets/add_to_cart_successfuly_dialog.dart';
+import 'package:storeapp/home/views/widgets/order_success_dialog.dart';
 
 import 'package:storeapp/notifications/views/screens/notifications_screen.dart';
 import 'package:storeapp/settings/views/screens/settings_screen.dart';
@@ -24,56 +24,18 @@ class HomeController extends GetxController {
   RxBool isLoadingSearch = false.obs;
   RxBool isAddingToCart = false.obs;
   RxInt cartId = 0.obs;
+  RxDouble cartItemsTotalPrice = 0.0.obs;
+  RxString date = DateTime.now()
+      .toString()
+      .substring(0, DateTime.now().toString().indexOf(' '))
+      .obs;
   TextEditingController? searchController = TextEditingController();
   RxList specialProducts = <SpecialProductsResponseModel>[].obs;
+  RxList allProducts = <SearchlProductsResponseModel>[].obs;
   RxList searchProducts = <SearchlProductsResponseModel>[].obs;
   RxList cartItems = <GetCartItemsResponseModel>[].obs;
   final ProductsProvider _productsProvider = ProductsProvider();
   final CartProvider _cartProvider = CartProvider();
-  createCart() async {
-    final response = await _cartProvider.createCart(9);
-    if (response.isLeft()) {
-      final result = response.fold((l) => l, (r) => null);
-      cartId.value = result!.id!;
-      print(cartId.value);
-    } else if (response.isRight()) {
-      Get.defaultDialog(
-        title: 'error'.tr,
-        content: Text(
-          'please_try_again'.tr,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
-    }
-  }
-
-  addToCart(product, context) async {
-    isAddingToCart.value = true;
-    final response = await _cartProvider.addToCart(9, product);
-    if (response.isLeft()) {
-      final result = response.fold((l) => l, (r) => null);
-      addToCartSuccessDialog(context);
-      getCartItems();
-    } else if (response.isRight()) {
-       getCartItems();
-      
-      /*   Get.defaultDialog(
-          title: 'error'.tr,
-          content: Text(
-            'please_try_again'.tr,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-            ),
-          )); */
-    }
-    isAddingToCart.value = false;
-  }
 
   getSpecialProducts() async {
     isLoading.value = true;
@@ -107,7 +69,6 @@ class HomeController extends GetxController {
       searchProducts.clear();
       searchProducts.addAll(result!);
       searchProducts.refresh();
-      print(searchProducts.length);
     } else if (response.isRight()) {
       Get.defaultDialog(
           title: 'error'.tr,
@@ -123,14 +84,111 @@ class HomeController extends GetxController {
     isLoadingSearch.value = false;
   }
 
+  addToCart(context, product) async {
+    isAddingToCart.value = true;
+    final response = await _cartProvider.addToCart(9, product);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      cartId.value = result!.cart!;
+      print(cartId.value);
+      addToCartSuccessDialog(context);
+      getCartItems();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+          title: 'error'.tr,
+          content: Text(
+            'please_try_again'.tr,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ));
+    }
+    isAddingToCart.value = false;
+  }
+
+  addOrder(context, date) async {
+    isLoading.value = true;
+
+    final response = await _cartProvider.addOrder(cartId.value, date);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      Navigator.pop(Get.overlayContext!, true);
+      orderSuccessDialog(context);
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
   getCartItems() async {
     isLoading.value = true;
     final response = await _cartProvider.getCartItems(cartId.value);
     if (response.isLeft()) {
+      cartItemsTotalPrice.value = 0.0;
       final result = response.fold((l) => l, (r) => null);
       cartItems.clear();
       cartItems.addAll(result!);
       cartItems.refresh();
+      cartItems.forEach((element) {
+        cartItemsTotalPrice.value =
+            cartItemsTotalPrice.value + element.totalPriceOfItem;
+      });
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+          title: 'error'.tr,
+          content: Text(
+            'please_try_again'.tr,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ));
+    }
+    isLoading.value = false;
+  }
+
+  addSub(bool isAdd, cartListID) async {
+    isLoading.value = true;
+    final response = await _cartProvider.changeQuantity(isAdd, cartListID);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      getCartItems();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+          title: 'error'.tr,
+          content: Text(
+            'please_try_again'.tr,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ));
+    }
+    isLoading.value = false;
+  }
+
+  getProductsByCategory(int type) async {
+    isLoading.value = true;
+    final response = await _productsProvider.getProductsByCategory(type);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      allProducts.clear();
+      allProducts.addAll(result!);
+      allProducts.refresh();
     } else if (response.isRight()) {
       Get.defaultDialog(
           title: 'error'.tr,
@@ -209,7 +267,7 @@ class HomeController extends GetxController {
     controller = PersistentTabController(initialIndex: 0);
     if (GetStorage().read('env') == 'agent') {
       getSpecialProducts();
-      createCart();
+      getProductsByCategory(0);
     }
 
     super.onInit();

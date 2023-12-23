@@ -24,4 +24,6 @@ class API {
   static final createCartURL = _baseURL + 'cart/';
   static final addToCartURL = _baseURL + 'add_to_cart/';
   static final cartItemsURL = _baseURL + 'cart_items/';
+  static final changeQuantityURL = _baseURL + 'change-quantity/';
+  static final addOrderURL = _baseURL + 'create-order/';
 }

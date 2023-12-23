@@ -1,25 +1,24 @@
 class CreateCartResponseModel {
   int? id;
-  int? customer;
-  int? getItemsNum;
-  int? totalCartPrice;
+  int? quantity;
+  int? products;
+  int? cart;
 
-  CreateCartResponseModel(
-      {this.id, this.customer, this.getItemsNum, this.totalCartPrice});
+  CreateCartResponseModel({this.id, this.quantity, this.products, this.cart});
 
   CreateCartResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    customer = json['customer'];
-    getItemsNum = json['get_items_num'];
-    totalCartPrice = json['total_cart_price'];
+    quantity = json['quantity'];
+    products = json['products'];
+    cart = json['cart'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['customer'] = this.customer;
-    data['get_items_num'] = this.getItemsNum;
-    data['total_cart_price'] = this.totalCartPrice;
+    data['quantity'] = this.quantity;
+    data['products'] = this.products;
+    data['cart'] = this.cart;
     return data;
   }
 }

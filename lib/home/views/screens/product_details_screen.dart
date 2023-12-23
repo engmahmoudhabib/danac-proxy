@@ -263,8 +263,8 @@ class ProductDetailsScreen extends StatelessWidget {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            print(id);
-                            controller.addToCart(id, context);
+                            
+                            controller.addToCart(context, id);
                           },
                           child: Text(
                             'add_to_cart'.tr,
