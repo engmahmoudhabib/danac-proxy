@@ -165,8 +165,32 @@ class MyLocale implements Translations {
           'points_details': 'تفاصيل النقاط',
           'categories_details': 'تفاصيل الفئات',
           'how_to_use_my_points': 'كيف يمكنني أن أستخدم نقاطي ؟',
-          'what_to_do_with_my_points': 'ماذا يمكنني أن أفعل بنقاطي ؟' , 
-         
+          'what_to_do_with_my_points': 'ماذا يمكنني أن أفعل بنقاطي ؟',
+          'finished': 'منتهية',
+          'desierve': 'مستحقة',
+          'used': 'مستخدمة',
+          'all': 'الجميع',
+          'bronz': 'بروزنزي',
+          'start_point': 'نقطة انطلاقك بين 0 - 150 نقطة',
+          'what_aftr_bronz': 'ماذا بعد البرونزي؟',
+          'silver': 'فضي',
+          'to_reach_silver':
+              'لتصل للميدالية الفضية يجب أن تقع نقاطك بين 151 - 300 نقطة ',
+          'gold': 'ذهبي',
+          'to_reach_gold':
+              'لتصل للميدالية الذهبية يجب أن تقع نقاطك بين 301 - 400 نقطة',
+          'platinum': 'بلاتينيوم',
+          'to_reach_platinum':
+              'لتصل للميدالية البلاتينية يجب أن تتعدى نقاطك 400 نقطة',
+          'use_points': 'استخدام النقاط',
+          'enter_otp_code': 'أدخل رمز التحقق',
+          'please_insert_otp':
+              'يرجى إدخال رمز التحقق المرسل إلى البريد الالكتروني',
+          'confirm_code': 'تأكيد الرمز' ,
+          'reset_pass': 'إعادة تعيين كلمة المرور' , 
+          'please_renter':'الرجاء إدخال كلمة المرور الجديدة وتأكيدها' , 
+          'new_password' : 'كلمة المرور الجديدة', 
+          'confirm_newpassword' :'تأكيد كلمة المرور الجديدة'
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -337,7 +361,32 @@ class MyLocale implements Translations {
           'points_details': 'Détails des points',
           'categories_details': 'Détails des catégories',
           'how_to_use_my_points': 'Comment puis-je utiliser mes points ?',
-          'what_to_do_with_my_points': 'Que puis-je faire avec mes points ?'
+          'what_to_do_with_my_points': 'Que puis-je faire avec mes points ?',
+          'finished': 'Fini',
+          'all': 'tout le monde',
+          'used': 'Utilisé',
+          'desierve': 'Bien mérité',
+          'bronz': 'Bronze',
+          'start_point': 'Votre point de départ se situe entre 0 et 150 points',
+          'what_aftr_bronz': 'Quelle est la prochaine étape pour le bronze ?',
+          'silver': 'Argent',
+          'to_reach_silver':
+              "Pour atteindre la médaille d'argent, vos points doivent être compris entre 151 et 300 points.",
+          'gold': 'Doré',
+          'to_reach_gold':
+              "Pour atteindre la médaille d'or, vos points doivent se situer entre 301 et 400 points.",
+          'platinum': 'Platine',
+          'to_reach_platinum':
+              'Pour atteindre la médaille de platine, vos points doivent dépasser 400 points',
+          'use_points': 'Utiliser des points',
+          'enter_otp_code': 'Entrez le code de vérification',
+          'please_insert_otp':
+              'Veuillez saisir le code de vérification envoyé à votre adresse e-mail',
+          'confirm_code': 'Confirmez le code',
+          'reset_pass': 'Réinitialisation du mot de passe' , 
+          'please_renter': 'Veuillez saisir et confirmer votre nouveau mot de passe' , 
+          'new_password' :'nouveau mot de passe' , 
+          'confirm_newpassword' : 'Confirmez le mot de passe'
         }
       };
 }

@@ -26,18 +26,21 @@ class SignUpResponseModel {
 
 class InformationUser {
   String? phonenumber;
+  String? email;
   String? username;
 
-  InformationUser({this.phonenumber, this.username});
+  InformationUser({this.phonenumber, this.email, this.username});
 
   InformationUser.fromJson(Map<String, dynamic> json) {
     phonenumber = json['phonenumber'];
+    email = json['email'];
     username = json['username'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['phonenumber'] = this.phonenumber;
+    data['email'] = this.email;
     data['username'] = this.username;
     return data;
   }

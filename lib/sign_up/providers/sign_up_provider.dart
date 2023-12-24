@@ -6,7 +6,7 @@ import 'package:storeapp/sign_up/models/sign_up_response_model.dart';
 
 class SignUpProvider extends GetConnect {
   Future<Either<SignUpResponseModel, String?>> signUp(
-      String? name, String? phone, String? password) async {
+      String? name, String? phone, String? password , String? email) async {
     try {
       final response = await post(
         API.signUpURL,
@@ -14,6 +14,7 @@ class SignUpProvider extends GetConnect {
           username: name,
           password: password,
           phonenumber: phone,
+          email: email,
         ).toJson(),
       );
 

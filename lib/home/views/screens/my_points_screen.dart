@@ -4,7 +4,9 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 import 'package:storeapp/home/controllers/home_controller.dart';
+import 'package:storeapp/home/views/screens/categories_details_screen.dart';
 import 'package:storeapp/home/views/screens/points_details_screen.dart';
+import 'package:storeapp/home/views/screens/use_points_screen.dart';
 
 class MyPointsScreen extends StatelessWidget {
   MyPointsScreen({super.key});
@@ -68,7 +70,9 @@ class MyPointsScreen extends StatelessWidget {
                               SizedBox(
                                 width: 200,
                                 child: Text(
-                                  '${controller.points.first.number}' + ' ' + 'points'.tr,
+                                  '${controller.points.first.number}' +
+                                      ' ' +
+                                      'points'.tr,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -93,7 +97,9 @@ class MyPointsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'points_expired'.tr + ' ' + '${controller.points.first.expireDate}'.tr,
+                                'points_expired'.tr +
+                                    ' ' +
+                                    '${controller.points.first.expireDate}'.tr,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -112,14 +118,14 @@ class MyPointsScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ListTile(
-                        onTap: (){
-                             PersistentNavBarNavigator.pushNewScreen(
-                          context,
-                          screen: PointsDetailsScreen(),
-                          withNavBar: true,
-                          pageTransitionAnimation:
-                              PageTransitionAnimation.cupertino,
-                        );
+                        onTap: () {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: PointsDetailsScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          );
                         },
                         leading: Text(
                           'points_details'.tr,
@@ -138,6 +144,15 @@ class MyPointsScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ListTile(
+                        onTap: () {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: CategoriesDetailsScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          );
+                        },
                         leading: Text(
                           'categories_details'.tr,
                           style: TextStyle(
@@ -155,6 +170,15 @@ class MyPointsScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ListTile(
+                        onTap: () {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: UsePointsScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          );
+                        },
                         title: Text(
                           'what_to_do_with_my_points'.tr,
                           style: TextStyle(

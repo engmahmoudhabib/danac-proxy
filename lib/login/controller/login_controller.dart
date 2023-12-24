@@ -7,6 +7,8 @@ import 'package:storeapp/login/providers/login_provider.dart';
 class LoginController extends GetxController {
   final TextEditingController? phoneController = TextEditingController();
   final TextEditingController? passwordController = TextEditingController();
+  final TextEditingController? password1Controller = TextEditingController();
+  final TextEditingController? password2Controller = TextEditingController();
   final LoginProvider _loginProvider = LoginProvider();
   RxBool isLoading = false.obs;
 

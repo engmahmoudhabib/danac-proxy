@@ -22,4 +22,45 @@ class PointsProvider extends GetConnect {
       return Right('An error occurred: $e');
     }
   }
+
+
+ Future<Either<List<PointsResponseModel>, String?>> getUsedPoints(id) async {
+    try {
+      final response = await get(API.usedPointsURL + '$id');
+      if (response.status.isOk) {
+        Iterable l = response.body;
+
+        List<PointsResponseModel> res = List<PointsResponseModel>.from(
+            l.map((model) => PointsResponseModel.fromJson(model)));
+        return Left(res);
+      } else {
+        print(response.body);
+        return Right(response.statusText);
+      }
+    } catch (e) {
+      print(e.toString());
+      return Right('An error occurred: $e');
+    }
+  }
+
+Future<Either<List<PointsResponseModel>, String?>> getExpiredPoints(id) async {
+    try {
+      final response = await get(API.expiredPointsURL + '$id');
+      if (response.status.isOk) {
+        Iterable l = response.body;
+
+        List<PointsResponseModel> res = List<PointsResponseModel>.from(
+            l.map((model) => PointsResponseModel.fromJson(model)));
+        return Left(res);
+      } else {
+        print(response.body);
+        return Right(response.statusText);
+      }
+    } catch (e) {
+      print(e.toString());
+      return Right('An error occurred: $e');
+    }
+  }
+
+
 }

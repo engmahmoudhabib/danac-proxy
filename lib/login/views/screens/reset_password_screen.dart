@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
+import 'package:storeapp/login/controller/login_controller.dart';
 import 'package:storeapp/login/views/widgets/custom_textField.dart';
-import 'package:storeapp/sign_up/controllers/sign_up_controller.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
-  final SignUpController controller = Get.put(SignUpController());
+class ResetPasswordScreen extends StatelessWidget {
+  ResetPasswordScreen({super.key});
+  final LoginController controller = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -26,9 +25,8 @@ class SignUpScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.red,
                     borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(40.0),
-                      bottomLeft: Radius.circular(40.0),
-                    ),
+                        bottomRight: Radius.circular(40.0),
+                        bottomLeft: Radius.circular(40.0)),
                   ),
                   child: FadeInUp(
                     child: Padding(
@@ -36,7 +34,7 @@ class SignUpScreen extends StatelessWidget {
                           top: MediaQuery.of(context).size.height * 0.07),
                       child: ListTile(
                         title: Text(
-                          'create_account'.tr,
+                          'reset_pass'.tr,
                           textDirection: Get.locale!.languageCode == 'ar'
                               ? TextDirection.rtl
                               : TextDirection.ltr,
@@ -47,7 +45,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          'please_insert_info'.tr,
+                          'please_renter'.tr,
                           textDirection: Get.locale!.languageCode == 'ar'
                               ? TextDirection.rtl
                               : TextDirection.ltr,
@@ -67,59 +65,31 @@ class SignUpScreen extends StatelessWidget {
               ),
               FadeInDown(
                 child: CustomTextField(
-                  controller: controller.nameController,
-                  prefixIcon: AppImages.profile,
-                  suffixIcon: null,
-                  hint: 'name'.tr,
-                  isPassword: false,
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.emailAddress,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              FadeInDown(
-                child: CustomTextField(
-                  controller: controller.phoneController,
-                  prefixIcon: AppImages.phone,
-                  suffixIcon: null,
-                  hint: 'phone'.tr,
-                  isPassword: false,
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.phone,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-                  FadeInDown(
-                child: CustomTextField(
-                  controller: controller.emailController,
-                  prefixIcon: null,
-                  suffixIcon: null,
-                  hint: 'email'.tr,
-                  isPassword: false,
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.emailAddress,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              FadeInRight(
-                child: CustomTextField(
-                  controller: controller.passwordController,
+                  controller: controller.password1Controller,
                   prefixIcon: AppImages.lock,
                   suffixIcon: AppImages.eye,
-                  hint: 'password'.tr,
+                  hint: 'new_password'.tr,
                   isPassword: true,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.emailAddress,
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              FadeInDown(
+                child: CustomTextField(
+                  controller: controller.password1Controller,
+                  prefixIcon: AppImages.lock,
+                  suffixIcon: AppImages.eye,
+                  hint: 'confirm_newpassword'.tr,
+                  isPassword: true,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.emailAddress,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
               ),
               FadeInLeft(
                 child: SizedBox(
@@ -132,11 +102,9 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         )
                       : ElevatedButton(
-                          onPressed: () {
-                            controller.signUp(context);
-                          },
+                          onPressed: () {},
                           child: Text(
-                            'create_account'.tr,
+                            'reset_pass'.tr,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,

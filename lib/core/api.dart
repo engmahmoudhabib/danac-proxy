@@ -29,4 +29,6 @@ class API {
   static final getOrdersURL = _baseURL + 'orders/';
   static final getOrderURL = _baseURL + 'order/';
   static final pointsURL = _baseURL + 'points/';
+  static final usedPointsURL = _baseURL + 'used-points/';
+  static final expiredPointsURL = _baseURL + 'expired-points/';
 }

@@ -11,7 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  GetStorage().write('env' , 'agent');
+  GetStorage().write('env' , 'driver');
   runApp(Phoenix(child: const StoreApp()));
 }
 

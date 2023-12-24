@@ -246,7 +246,54 @@ class HomeController extends GetxController {
       points.clear();
       points.addAll(result!);
       points.refresh();
-    
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
+  getUsedPoints(id) async {
+    isLoading.value = true;
+    final response = await _pointsProvider.getUsedPoints(id);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      points.clear();
+      points.addAll(result!);
+      points.refresh();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
+  getExpiredPoints(id) async {
+    isLoading.value = true;
+    final response = await _pointsProvider.getExpiredPoints(id);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      points.clear();
+      points.addAll(result!);
+      points.refresh();
     } else if (response.isRight()) {
       Get.defaultDialog(
         title: 'error'.tr,
@@ -350,6 +397,7 @@ class HomeController extends GetxController {
       getProductsByCategory(0);
       getOrders();
       getMyPoints(9);
+   
     }
 
     super.onInit();

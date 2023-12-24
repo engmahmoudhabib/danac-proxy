@@ -1,14 +1,30 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 import 'package:storeapp/core/colors.dart';
-import 'package:storeapp/core/images.dart';
-import 'package:storeapp/login/views/widgets/custom_textField.dart';
-import 'package:storeapp/sign_up/controllers/sign_up_controller.dart';
+import 'package:storeapp/login/controller/login_controller.dart';
+import 'package:storeapp/login/views/screens/reset_password_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
-  final SignUpController controller = Get.put(SignUpController());
+class OTPScreen extends StatelessWidget {
+  OTPScreen({super.key});
+  final LoginController controller = Get.put(LoginController());
+  final defaultPinTheme = PinTheme(
+    width: 56,
+    height: 70,
+    textStyle: TextStyle(
+      fontSize: 20,
+      color: Colors.black,
+      fontWeight: FontWeight.w600,
+    ),
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: AppColors.red,
+      ),
+      borderRadius: BorderRadius.circular(10),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +52,7 @@ class SignUpScreen extends StatelessWidget {
                           top: MediaQuery.of(context).size.height * 0.07),
                       child: ListTile(
                         title: Text(
-                          'create_account'.tr,
+                          'enter_otp_code'.tr,
                           textDirection: Get.locale!.languageCode == 'ar'
                               ? TextDirection.rtl
                               : TextDirection.ltr,
@@ -47,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          'please_insert_info'.tr,
+                          'please_insert_otp'.tr,
                           textDirection: Get.locale!.languageCode == 'ar'
                               ? TextDirection.rtl
                               : TextDirection.ltr,
@@ -65,61 +81,18 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
               ),
-              FadeInDown(
-                child: CustomTextField(
-                  controller: controller.nameController,
-                  prefixIcon: AppImages.profile,
-                  suffixIcon: null,
-                  hint: 'name'.tr,
-                  isPassword: false,
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.emailAddress,
-                ),
+              Pinput(
+                defaultPinTheme: defaultPinTheme,
+                disabledPinTheme: defaultPinTheme,
+                focusedPinTheme: defaultPinTheme,
+                followingPinTheme: defaultPinTheme,
+                validator: (s) {},
+                pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                showCursor: true,
+                onCompleted: (pin) => print(pin),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              FadeInDown(
-                child: CustomTextField(
-                  controller: controller.phoneController,
-                  prefixIcon: AppImages.phone,
-                  suffixIcon: null,
-                  hint: 'phone'.tr,
-                  isPassword: false,
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.phone,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-                  FadeInDown(
-                child: CustomTextField(
-                  controller: controller.emailController,
-                  prefixIcon: null,
-                  suffixIcon: null,
-                  hint: 'email'.tr,
-                  isPassword: false,
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.emailAddress,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              FadeInRight(
-                child: CustomTextField(
-                  controller: controller.passwordController,
-                  prefixIcon: AppImages.lock,
-                  suffixIcon: AppImages.eye,
-                  hint: 'password'.tr,
-                  isPassword: true,
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.emailAddress,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery.of(context).size.height * 0.1,
               ),
               FadeInLeft(
                 child: SizedBox(
@@ -133,10 +106,10 @@ class SignUpScreen extends StatelessWidget {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            controller.signUp(context);
+                            Get.to(ResetPasswordScreen());
                           },
                           child: Text(
-                            'create_account'.tr,
+                            'confirm_code'.tr,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,

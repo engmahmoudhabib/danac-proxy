@@ -9,6 +9,7 @@ class SignUpController extends GetxController {
   final TextEditingController? nameController = TextEditingController();
   final TextEditingController? phoneController = TextEditingController();
   final TextEditingController? passwordController = TextEditingController();
+  final TextEditingController? emailController = TextEditingController();
   final SignUpProvider _signUpProvider = SignUpProvider();
 
   signUp(context) async {
@@ -17,6 +18,8 @@ class SignUpController extends GetxController {
       nameController?.text,
       phoneController?.text,
       passwordController?.text,
+      emailController?.text,
+      
     );
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
@@ -24,6 +27,7 @@ class SignUpController extends GetxController {
       GetStorage().write('access', result?.tokens?.accsess);
       GetStorage().write('refresh', result?.tokens?.refresh);
       GetStorage().write('name', result?.informationUser?.username);
+      GetStorage().write('email', result?.informationUser?.email);
       YYDialogDemo(context);
     
     } else if (response.isRight()) {
