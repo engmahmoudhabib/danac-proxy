@@ -5,6 +5,7 @@ import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 import 'package:storeapp/sign_up/views/screens/map_screen.dart';
 
+
 YYDialog YYDialogDemo(BuildContext context) {
   return YYDialog().build(context)
     ..width = 327

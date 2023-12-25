@@ -22,6 +22,7 @@ class LoginProvider extends GetConnect {
         return Right(response.body);
       }
     } catch (e) {
+    
       return Right(e.toString());
     }
   }

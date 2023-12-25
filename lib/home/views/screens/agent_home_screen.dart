@@ -3,7 +3,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
@@ -69,45 +71,51 @@ class AgentHomeScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  child: CustomTextField(
-                                    controller: controller.searchController,
-                                    hint: 'search_product_name'.tr,
-                                    isPassword: false,
-                                    prefixIcon: null,
-                                    suffixIcon: null,
-                                    textInputAction: TextInputAction.done,
-                                    textInputType: TextInputType.emailAddress,
-                                    onSubmitted: (val) =>
-                                        controller.getSearchProducts(false),
+                            GetStorage().read('env') == 'driver'
+                                ? SizedBox.shrink()
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                        child: CustomTextField(
+                                          controller:
+                                              controller.searchController,
+                                          hint: 'search_product_name'.tr,
+                                          isPassword: false,
+                                          prefixIcon: null,
+                                          suffixIcon: null,
+                                          textInputAction: TextInputAction.done,
+                                          textInputType:
+                                              TextInputType.emailAddress,
+                                          onSubmitted: (val) => controller
+                                              .getSearchProducts(false),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.05,
+                                      ),
+                                      InkWell(
+                                          onTap: () async {
+                                            String barcodeScanRes =
+                                                await FlutterBarcodeScanner
+                                                    .scanBarcode(
+                                              '#FF3758',
+                                              'cancel'.tr,
+                                              true,
+                                              ScanMode.BARCODE,
+                                            );
+                                            controller.searchController?.text =
+                                                barcodeScanRes;
+                                            controller.getSearchProducts(true);
+                                          },
+                                          child: Image.asset(AppImages.bacode)),
+                                    ],
                                   ),
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.05,
-                                ),
-                                InkWell(
-                                    onTap: () async {
-                                      String barcodeScanRes =
-                                          await FlutterBarcodeScanner
-                                              .scanBarcode(
-                                        '#FF3758',
-                                        'cancel'.tr,
-                                        true,
-                                        ScanMode.BARCODE,
-                                      );
-                                      controller.searchController?.text =
-                                          barcodeScanRes;
-                                      controller.getSearchProducts(true);
-                                    },
-                                    child: Image.asset(AppImages.bacode)),
-                              ],
-                            ),
                           ],
                         ),
                       ),
@@ -127,319 +135,743 @@ class AgentHomeScreen extends StatelessWidget {
                         ),
                       )
                     : Column(
-                        children: [
-                          controller.searchProducts.isEmpty
-                              ? Column(
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.45,
-                                            child: Text(
-                                              'special_products'.tr,
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.45,
-                                            child: InkWell(
-                                              onTap: () {
-                                                PersistentNavBarNavigator
-                                                    .pushNewScreen(
-                                                  context,
-                                                  screen: SpecialElementsScreen(
-                                                    type: 0,
+                        children: GetStorage().read('env') == 'driver'
+                            ? [
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.68,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.95,
+                                  child: AnimationLimiter(
+                                    child: GridView.count(
+                                      crossAxisCount: 1,
+                                      children: List.generate(
+                                        2,
+                                        (int index) {
+                                          return AnimationConfiguration
+                                              .staggeredGrid(
+                                            position: index,
+                                            duration: const Duration(
+                                                milliseconds: 375),
+                                            columnCount: 2,
+                                            child: ScaleAnimation(
+                                              child: FadeInAnimation(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    if (index == 1) {}
+                                                  },
+                                                  child: Card(
+                                                    elevation: 5,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        index == 0
+                                                            ? Image.asset(
+                                                                AppImages.Truck)
+                                                            : Image.asset(
+                                                                AppImages
+                                                                    .profile),
+                                                        SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        Text(
+                                                          index == 0
+                                                              ? 'proxy_n'.tr
+                                                              : 'conducteur'.tr,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 17,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                  withNavBar: true,
-                                                  pageTransitionAnimation:
-                                                      PageTransitionAnimation
-                                                          .cupertino,
-                                                );
-                                              },
-                                              child: Text(
-                                                'see_all'.tr,
-                                                textAlign: TextAlign.end,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          );
+                                        },
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    controller.isLoading.value == true
-                                        ? SizedBox(
-                                            height: 200,
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                color: AppColors.red,
-                                              ),
-                                            ),
-                                          )
-                                        : CarouselSlider(
-                                            options: CarouselOptions(
-                                              height: 200.0,
-                                              viewportFraction: 0.35,
-                                              initialPage: 0,
-                                              enableInfiniteScroll: false,
-                                              reverse: false,
-                                              autoPlay: true,
-                                            ),
-                                            items: controller.specialProducts
-                                                .map((i) {
-                                              return Builder(
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return InkWell( 
-                                                    onTap: (){
-                                                         PersistentNavBarNavigator
-                                                    .pushNewScreen(
-                                                  context,
-                                                  screen: ProductDetailsScreen(
-                                                  productName: i.name,
-                                                  url: i.image,
-                                                  details: i.description,
-                                                  units: i.numPerItem.toString(),
-                                                  cartoon: i.itemPerCarton.toString(),
-                                                  category: i.category,
-                                                  cartoonPrice: i.salePrice.toString(),
-                                                  id: i.id,
+                                  ),
+                                )
+                              ]
+                            : [
+                                controller.searchProducts.isEmpty
+                                    ? Column(
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.45,
+                                                  child: Text(
+                                                    'special_products'.tr,
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
                                                   ),
-                                                  withNavBar: true,
-                                                  pageTransitionAnimation:
-                                                      PageTransitionAnimation
-                                                          .cupertino,
-                                                );
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.45,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      PersistentNavBarNavigator
+                                                          .pushNewScreen(
+                                                        context,
+                                                        screen:
+                                                            SpecialElementsScreen(
+                                                          type: 0,
+                                                        ),
+                                                        withNavBar: true,
+                                                        pageTransitionAnimation:
+                                                            PageTransitionAnimation
+                                                                .cupertino,
+                                                      );
                                                     },
-                                                    child: Column(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 150,
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.3,
-                                                          child: Card(
-                                                            elevation: 5,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15.0),
-                                                            ),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15.0),
-                                                              child:
-                                                                  Image.network(
-                                                                i.image,
-                                                                fit: BoxFit.cover,
+                                                    child: Text(
+                                                      'see_all'.tr,
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          controller.isLoading.value == true
+                                              ? SizedBox(
+                                                  height: 200,
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: AppColors.red,
+                                                    ),
+                                                  ),
+                                                )
+                                              : CarouselSlider(
+                                                  options: CarouselOptions(
+                                                    height: 200.0,
+                                                    viewportFraction: 0.35,
+                                                    initialPage: 0,
+                                                    enableInfiniteScroll: false,
+                                                    reverse: false,
+                                                    autoPlay: true,
+                                                  ),
+                                                  items: controller
+                                                      .specialProducts
+                                                      .map((i) {
+                                                    return Builder(
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            PersistentNavBarNavigator
+                                                                .pushNewScreen(
+                                                              context,
+                                                              screen:
+                                                                  ProductDetailsScreen(
+                                                                productName:
+                                                                    i.name,
+                                                                url: i.image,
+                                                                details: i
+                                                                    .description,
+                                                                units: i
+                                                                    .numPerItem
+                                                                    .toString(),
+                                                                cartoon: i
+                                                                    .itemPerCarton
+                                                                    .toString(),
+                                                                category:
+                                                                    i.category,
+                                                                cartoonPrice: i
+                                                                    .salePrice
+                                                                    .toString(),
+                                                                id: i.id,
                                                               ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        FadeInLeft(
-                                                          child: SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.3,
-                                                            height: 29,
-                                                            child: ElevatedButton(
-                                                              onPressed: () {},
-                                                              child: Text(
-                                                                'add_to_cart'.tr,
-                                                                style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
+                                                              withNavBar: true,
+                                                              pageTransitionAnimation:
+                                                                  PageTransitionAnimation
+                                                                      .cupertino,
+                                                            );
+                                                          },
+                                                          child: Column(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 150,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.3,
+                                                                child: Card(
+                                                                  elevation: 5,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15.0),
+                                                                  ),
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      i.image,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
-                                                              style: ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty.all<
+                                                              SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              FadeInLeft(
+                                                                child: SizedBox(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.3,
+                                                                  height: 29,
+                                                                  child:
+                                                                      ElevatedButton(
+                                                                    onPressed:
+                                                                        () {},
+                                                                    child: Text(
+                                                                      'add_to_cart'
+                                                                          .tr,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                    ),
+                                                                    style:
+                                                                        ButtonStyle(
+                                                                      backgroundColor: MaterialStateProperty.all<
+                                                                              Color>(
+                                                                          AppColors
+                                                                              .red),
+                                                                      shape: MaterialStateProperty
+                                                                          .all<
+                                                                              RoundedRectangleBorder>(
+                                                                        RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(12.0),
+                                                                          side:
+                                                                              BorderSide(
+                                                                            color:
+                                                                                AppColors.red,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                          SizedBox(
+                                            height: 30,
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.45,
+                                                  child: Text(
+                                                    'most_sale_products'.tr,
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.45,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      PersistentNavBarNavigator
+                                                          .pushNewScreen(
+                                                        context,
+                                                        screen:
+                                                            SpecialElementsScreen(
+                                                          type: 1,
+                                                        ),
+                                                        withNavBar: true,
+                                                        pageTransitionAnimation:
+                                                            PageTransitionAnimation
+                                                                .cupertino,
+                                                      );
+                                                    },
+                                                    child: Text(
+                                                      'see_all'.tr,
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          controller.isLoading.value == true
+                                              ? SizedBox(
+                                                  height: 200,
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: AppColors.red,
+                                                    ),
+                                                  ),
+                                                )
+                                              : CarouselSlider(
+                                                  options: CarouselOptions(
+                                                    height: 200.0,
+                                                    viewportFraction: 0.35,
+                                                    initialPage: 0,
+                                                    enableInfiniteScroll: false,
+                                                    reverse: false,
+                                                    autoPlay: true,
+                                                  ),
+                                                  items: controller
+                                                      .specialProducts
+                                                      .map((i) {
+                                                    return Builder(
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 150,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.3,
+                                                              child: Card(
+                                                                elevation: 5,
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15.0),
+                                                                ),
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    i.image,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            FadeInLeft(
+                                                              child: SizedBox(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.3,
+                                                                height: 29,
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {},
+                                                                  child: Text(
+                                                                    'add_to_cart'
+                                                                        .tr,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                                  ),
+                                                                  style:
+                                                                      ButtonStyle(
+                                                                    backgroundColor: MaterialStateProperty.all<
                                                                             Color>(
                                                                         AppColors
                                                                             .red),
-                                                                shape: MaterialStateProperty
-                                                                    .all<
-                                                                        RoundedRectangleBorder>(
-                                                                  RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                12.0),
-                                                                    side:
-                                                                        BorderSide(
-                                                                      color:
-                                                                          AppColors
-                                                                              .red,
+                                                                    shape: MaterialStateProperty
+                                                                        .all<
+                                                                            RoundedRectangleBorder>(
+                                                                      RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(12.0),
+                                                                        side:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              AppColors.red,
+                                                                        ),
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            }).toList(),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                          SizedBox(
+                                            height: 30,
                                           ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.45,
+                                                  child: Text(
+                                                    'new_products'.tr,
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.45,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      PersistentNavBarNavigator
+                                                          .pushNewScreen(
+                                                        context,
+                                                        screen:
+                                                            SpecialElementsScreen(
+                                                          type: 2,
+                                                        ),
+                                                        withNavBar: true,
+                                                        pageTransitionAnimation:
+                                                            PageTransitionAnimation
+                                                                .cupertino,
+                                                      );
+                                                    },
+                                                    child: Text(
+                                                      'see_all'.tr,
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          controller.isLoading.value == true
+                                              ? SizedBox(
+                                                  height: 200,
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: AppColors.red,
+                                                    ),
+                                                  ),
+                                                )
+                                              : CarouselSlider(
+                                                  options: CarouselOptions(
+                                                    height: 200.0,
+                                                    viewportFraction: 0.35,
+                                                    initialPage: 0,
+                                                    enableInfiniteScroll: false,
+                                                    reverse: false,
+                                                    autoPlay: true,
+                                                  ),
+                                                  items: controller
+                                                      .specialProducts
+                                                      .map((i) {
+                                                    return Builder(
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 150,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.3,
+                                                              child: Card(
+                                                                elevation: 5,
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15.0),
+                                                                ),
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    i.image,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            FadeInLeft(
+                                                              child: SizedBox(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.3,
+                                                                height: 29,
+                                                                child:
+                                                                    ElevatedButton(
+                                                                  onPressed:
+                                                                      () {},
+                                                                  child: Text(
+                                                                    'add_to_cart'
+                                                                        .tr,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                                  ),
+                                                                  style:
+                                                                      ButtonStyle(
+                                                                    backgroundColor: MaterialStateProperty.all<
+                                                                            Color>(
+                                                                        AppColors
+                                                                            .red),
+                                                                    shape: MaterialStateProperty
+                                                                        .all<
+                                                                            RoundedRectangleBorder>(
+                                                                      RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(12.0),
+                                                                        side:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              AppColors.red,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                        ],
+                                      )
+                                    : Column(
                                         children: [
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.45,
+                                            height: 20,
+                                          ),
+                                          Text(
+                                            'search_results'.tr,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              controller.searchProducts.clear();
+                                              controller.searchProducts
+                                                  .refresh();
+                                              controller.searchController
+                                                  ?.clear();
+                                            },
                                             child: Text(
-                                              'most_sale_products'.tr,
-                                              textAlign: TextAlign.start,
+                                              'back'.tr,
                                               style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w300,
                                               ),
                                             ),
                                           ),
                                           SizedBox(
+                                            height: 15,
+                                          ),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.7,
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.45,
-                                            child: InkWell(
-                                              onTap: () {
-                                                PersistentNavBarNavigator
-                                                    .pushNewScreen(
-                                                  context,
-                                                  screen: SpecialElementsScreen(
-                                                    type: 1,
-                                                  ),
-                                                  withNavBar: true,
-                                                  pageTransitionAnimation:
-                                                      PageTransitionAnimation
-                                                          .cupertino,
-                                                );
-                                              },
-                                              child: Text(
-                                                'see_all'.tr,
-                                                textAlign: TextAlign.end,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    controller.isLoading.value == true
-                                        ? SizedBox(
-                                            height: 200,
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                color: AppColors.red,
-                                              ),
-                                            ),
-                                          )
-                                        : CarouselSlider(
-                                            options: CarouselOptions(
-                                              height: 200.0,
-                                              viewportFraction: 0.35,
-                                              initialPage: 0,
-                                              enableInfiniteScroll: false,
-                                              reverse: false,
-                                              autoPlay: true,
-                                            ),
-                                            items: controller.specialProducts
-                                                .map((i) {
-                                              return Builder(
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Column(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 150,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
-                                                        child: Card(
-                                                          elevation: 5,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
-                                                          ),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
-                                                            child:
-                                                                Image.network(
-                                                              i.image,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                0.9,
+                                            child: GridView.count(
+                                              primary: false,
+                                              crossAxisCount: 3,
+                                              childAspectRatio: 4 / 5.8,
+                                              children: List.generate(
+                                                  controller.searchProducts
+                                                      .length, (index) {
+                                                return Stack(
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 200,
+                                                      child: Card(
+                                                        elevation: 5,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.0),
+                                                        ),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.0),
+                                                          child: Image.network(
+                                                            controller
+                                                                .searchProducts[
+                                                                    index]
+                                                                .image,
+                                                            fit: BoxFit.cover,
                                                           ),
                                                         ),
                                                       ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      FadeInLeft(
+                                                    ),
+                                                    Positioned(
+                                                      top: 140,
+                                                      child: FadeInLeft(
                                                         child: SizedBox(
                                                           width: MediaQuery.of(
                                                                       context)
@@ -486,310 +918,15 @@ class AgentHomeScreen extends StatelessWidget {
                                                           ),
                                                         ),
                                                       ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            }).toList(),
-                                          ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.45,
-                                            child: Text(
-                                              'new_products'.tr,
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.45,
-                                            child: InkWell(
-                                              onTap: () {
-                                                PersistentNavBarNavigator
-                                                    .pushNewScreen(
-                                                  context,
-                                                  screen: SpecialElementsScreen(
-                                                    type: 2,
-                                                  ),
-                                                  withNavBar: true,
-                                                  pageTransitionAnimation:
-                                                      PageTransitionAnimation
-                                                          .cupertino,
+                                                    ),
+                                                  ],
                                                 );
-                                              },
-                                              child: Text(
-                                                'see_all'.tr,
-                                                textAlign: TextAlign.end,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
+                                              }),
                                             ),
                                           ),
                                         ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    controller.isLoading.value == true
-                                        ? SizedBox(
-                                            height: 200,
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                color: AppColors.red,
-                                              ),
-                                            ),
-                                          )
-                                        : CarouselSlider(
-                                            options: CarouselOptions(
-                                              height: 200.0,
-                                              viewportFraction: 0.35,
-                                              initialPage: 0,
-                                              enableInfiniteScroll: false,
-                                              reverse: false,
-                                              autoPlay: true,
-                                            ),
-                                            items: controller.specialProducts
-                                                .map((i) {
-                                              return Builder(
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Column(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 150,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
-                                                        child: Card(
-                                                          elevation: 5,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
-                                                          ),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
-                                                            child:
-                                                                Image.network(
-                                                              i.image,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      FadeInLeft(
-                                                        child: SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.3,
-                                                          height: 29,
-                                                          child: ElevatedButton(
-                                                            onPressed: () {},
-                                                            child: Text(
-                                                              'add_to_cart'.tr,
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      AppColors
-                                                                          .red),
-                                                              shape: MaterialStateProperty
-                                                                  .all<
-                                                                      RoundedRectangleBorder>(
-                                                                RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              12.0),
-                                                                  side:
-                                                                      BorderSide(
-                                                                    color:
-                                                                        AppColors
-                                                                            .red,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            }).toList(),
-                                          ),
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      'search_results'.tr,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        controller.searchProducts.clear();
-                                        controller.searchProducts.refresh();
-                                        controller.searchController?.clear();
-                                      },
-                                      child: Text(
-                                        'back'.tr,
-                                        style: TextStyle(
-                                          color: AppColors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.7,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
-                                      child: GridView.count(
-                                        primary: false,
-                                        crossAxisCount: 3,
-                                        childAspectRatio: 4 / 5.8,
-                                        children: List.generate(
-                                            controller.searchProducts.length,
-                                            (index) {
-                                          return Stack(
-                                            children: [
-                                              SizedBox(
-                                                height: 200,
-                                                child: Card(
-                                                  elevation: 5,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15.0),
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15.0),
-                                                    child: Image.network(
-                                                      controller
-                                                          .searchProducts[index]
-                                                          .image,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 140,
-                                                child: FadeInLeft(
-                                                  child: SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
-                                                    height: 29,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {},
-                                                      child: Text(
-                                                        'add_to_cart'.tr,
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(
-                                                                    AppColors
-                                                                        .red),
-                                                        shape: MaterialStateProperty
-                                                            .all<
-                                                                RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12.0),
-                                                            side: BorderSide(
-                                                              color:
-                                                                  AppColors.red,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        }),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                        ],
+                                      )
+                              ],
                       )
               ],
             ),

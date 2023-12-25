@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "451670836661",
+    "project_id": "storeapp-8cc25",
+    "storage_bucket": "storeapp-8cc25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451670836661:android:90d87d6929ddecf94305fc",
+        "android_client_info": {
+          "package_name": "com.darko.storeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwH9zs98BM5dB1Eno6hJB0YQD36DVBRvA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

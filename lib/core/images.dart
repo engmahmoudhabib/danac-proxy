@@ -23,4 +23,5 @@ class AppImages {
   static final String success = 'assets/images/success.png';
     static final String bigPrice = 'assets/images/small_price.png';
   static final String smallPrice = 'assets/images/small_price.png';
+    static final String Truck = 'assets/images/Truck.png';
 }

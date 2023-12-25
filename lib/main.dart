@@ -5,13 +5,20 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:storeapp/core/app_pages.dart';
 import 'package:storeapp/core/local.dart';
+import 'package:storeapp/firebase_api.dart';
 import 'package:storeapp/login/views/screens/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebasAPI().initNotifications();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  GetStorage().write('env' , 'driver');
+  GetStorage().write('env', 'agent');
   runApp(Phoenix(child: const StoreApp()));
 }
 

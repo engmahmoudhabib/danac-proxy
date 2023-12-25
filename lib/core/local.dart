@@ -190,7 +190,8 @@ class MyLocale implements Translations {
           'reset_pass': 'إعادة تعيين كلمة المرور' , 
           'please_renter':'الرجاء إدخال كلمة المرور الجديدة وتأكيدها' , 
           'new_password' : 'كلمة المرور الجديدة', 
-          'confirm_newpassword' :'تأكيد كلمة المرور الجديدة'
+          'confirm_newpassword' :'تأكيد كلمة المرور الجديدة' , 
+          'proxy_n' :'مندوب' ,'conducteur':'سائق'
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -386,7 +387,9 @@ class MyLocale implements Translations {
           'reset_pass': 'Réinitialisation du mot de passe' , 
           'please_renter': 'Veuillez saisir et confirmer votre nouveau mot de passe' , 
           'new_password' :'nouveau mot de passe' , 
-          'confirm_newpassword' : 'Confirmez le mot de passe'
+          'confirm_newpassword' : 'Confirmez le mot de passe', 
+          'proxy_n' :'Représentant' , 
+          'conducteur':'conducteur'
         }
       };
 }

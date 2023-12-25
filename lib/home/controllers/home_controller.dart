@@ -332,7 +332,7 @@ class HomeController extends GetxController {
   }
 
   List<Widget> buildScreens() {
-    return GetStorage().read('env') == 'agent'
+    return GetStorage().read('env') == 'agent' || GetStorage().read('env') == 'driver'
         ? [
             AgentHomeScreen(),
             AgentProductsScreen(),
