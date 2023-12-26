@@ -151,6 +151,7 @@ class AgentHomeScreen extends StatelessWidget {
                                   child: AnimationLimiter(
                                     child: GridView.count(
                                       crossAxisCount: 1,
+                                      childAspectRatio: 7/4,
                                       children: List.generate(
                                         2,
                                         (int index) {
@@ -166,45 +167,48 @@ class AgentHomeScreen extends StatelessWidget {
                                                   onTap: () {
                                                     if (index == 1) {}
                                                   },
-                                                  child: Card(
-                                                    elevation: 5,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.0),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        index == 0
-                                                            ? Image.asset(
-                                                                AppImages.Truck)
-                                                            : Image.asset(
-                                                                AppImages
-                                                                    .profile),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Text(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(18.0),
+                                                    child: Card(
+                                                      elevation: 5,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                15.0),
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
                                                           index == 0
-                                                              ? 'proxy_n'.tr
-                                                              : 'conducteur'.tr,
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontSize: 17,
-                                                            color: Colors.grey,
+                                                              ? Image.asset(
+                                                                  AppImages.Truck)
+                                                              : Image.asset(
+                                                                  AppImages
+                                                                      .profile),
+                                                          SizedBox(
+                                                            height: 20,
                                                           ),
-                                                        ),
-                                                      ],
+                                                          Text(
+                                                            index == 0
+                                                                ? 'proxy_n'.tr
+                                                                : 'conducteur'.tr,
+                                                            textAlign:
+                                                                TextAlign.center,
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.w700,
+                                                              fontSize: 17,
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

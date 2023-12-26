@@ -222,7 +222,7 @@ class CartScreen extends StatelessWidget {
                                                                     controller
                                                                         .cartItems[
                                                                             index]
-                                                                        .Products
+                                                                        
                                                                         .id);
                                                               },
                                                               child: Icon(

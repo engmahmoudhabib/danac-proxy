@@ -18,7 +18,8 @@ Future<void> main() async {
   );
   await FirebasAPI().initNotifications();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  GetStorage().write('env', 'agent');
+  GetStorage().write('env', 'driver');
+  
   runApp(Phoenix(child: const StoreApp()));
 }
 
@@ -29,13 +30,15 @@ class StoreApp extends StatefulWidget {
   State<StoreApp> createState() => _StoreAppState();
 }
 
-class _StoreAppState extends State<StoreApp> {
+class _StoreAppState extends State<StoreApp> { 
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Store App',
       home: LoginScreen(),
+      
       translations: MyLocale(),
       locale: GetStorage().read('lang') != null
           ? Locale(GetStorage().read('lang'),

@@ -15,7 +15,7 @@ class CartProvider extends GetConnect {
         print(response.body);
         return Left(CreateCartResponseModel.fromJson(response.body));
       } else {
-         print(response.body);
+        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
@@ -29,14 +29,17 @@ class CartProvider extends GetConnect {
       final response = await delete(
         API.deleteItemFromCartURL + '$id/',
       );
+      print(API.deleteItemFromCartURL + '$id/');
 
       if (response.status.isOk) {
         print(response.body);
         return Left('deleteed successfully');
       } else {
+        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
+      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -88,6 +91,8 @@ class CartProvider extends GetConnect {
         List<GetCartItemsResponseModel> res =
             List<GetCartItemsResponseModel>.from(
                 l.map((model) => GetCartItemsResponseModel.fromJson(model)));
+
+        print(response.body);
         return Left(res);
       } else {
         print(response.body);

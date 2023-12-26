@@ -70,6 +70,7 @@ class LoginProvider extends GetConnect {
         },
       );
       if (response.status.isOk) {
+        
         return Left(GetOTPResponseModel.fromJson(response.body));
       } else {
         print(response.body);

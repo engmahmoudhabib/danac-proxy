@@ -438,7 +438,8 @@ class HomeController extends GetxController
   }
 
   List<PersistentBottomNavBarItem> navBarsItems() {
-    return GetStorage().read('env') == 'agent'
+    return GetStorage().read('env') == 'agent' ||
+            GetStorage().read('env') == 'driver'
         ? [
             PersistentBottomNavBarItem(
               icon: Icon(Icons.home),
@@ -456,7 +457,7 @@ class HomeController extends GetxController
               inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
             PersistentBottomNavBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon( GetStorage().read('env') == 'driver' ? Icons.settings:Icons.person),
               activeColorPrimary: AppColors.red,
               inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
