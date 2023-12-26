@@ -38,7 +38,8 @@ class LoginScreen extends StatelessWidget {
                   child: FadeInUp(
                     child: Padding(
                       padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.07),
+                        top: MediaQuery.of(context).size.height * 0.07,
+                      ),
                       child: ListTile(
                         title: Text(
                           'login'.tr,
@@ -108,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Get.to(ForgotPasswordScreen());
-                        // Get.to(NavigationScreen());
+                  
                       },
                       child: Text(
                         'forgot_password'.tr,

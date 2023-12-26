@@ -2,7 +2,7 @@ class AddOrderResponseModel {
   int? id;
   Client? client;
   List<Products>? products;
-  int? total;
+  double? total;
   int? productsNum;
   String? created;
   String? deliveryDate;
@@ -28,7 +28,7 @@ class AddOrderResponseModel {
         products!.add(new Products.fromJson(v));
       });
     }
-    total = json['total'];
+    total =double.parse( json['total'].toString());
     productsNum = json['products_num'];
     created = json['created'];
     deliveryDate = json['delivery_date'];

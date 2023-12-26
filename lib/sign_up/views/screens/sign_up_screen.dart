@@ -5,6 +5,7 @@ import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 import 'package:storeapp/login/views/widgets/custom_textField.dart';
 import 'package:storeapp/sign_up/controllers/sign_up_controller.dart';
+import 'package:storeapp/sign_up/views/screens/map_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -133,10 +134,11 @@ class SignUpScreen extends StatelessWidget {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            controller.signUp(context);
+                           // controller.signUp(context);
+                             Get.to(MapScreen());
                           },
                           child: Text(
-                            'create_account'.tr,
+                            'd_location'.tr,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,

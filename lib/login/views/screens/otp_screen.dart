@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/login/controller/login_controller.dart';
-import 'package:storeapp/login/views/screens/reset_password_screen.dart';
 
 class OTPScreen extends StatelessWidget {
-  OTPScreen({super.key});
+  final int type;
+  OTPScreen({super.key , required this.type,});
   final LoginController controller = Get.put(LoginController());
   final defaultPinTheme = PinTheme(
     width: 56,
@@ -89,7 +89,9 @@ class OTPScreen extends StatelessWidget {
                 validator: (s) {},
                 pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                 showCursor: true,
-                onCompleted: (pin) => print(pin),
+                onCompleted: (pin) {
+                  controller.otp.value = pin;
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
@@ -106,7 +108,7 @@ class OTPScreen extends StatelessWidget {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            Get.to(ResetPasswordScreen());
+                            controller.sendOTP(type , context);
                           },
                           child: Text(
                             'confirm_code'.tr,

@@ -109,8 +109,14 @@ class AgentHomeScreen extends StatelessWidget {
                                               true,
                                               ScanMode.BARCODE,
                                             );
-                                            controller.searchController?.text =
-                                                barcodeScanRes;
+                                            if (barcodeScanRes != '-1') {
+                                              controller.searchController
+                                                  ?.text = barcodeScanRes;
+                                            } else {
+                                              controller.searchController
+                                                  ?.clear();
+                                            }
+
                                             controller.getSearchProducts(true);
                                           },
                                           child: Image.asset(AppImages.bacode)),
@@ -379,10 +385,40 @@ class AgentHomeScreen extends StatelessWidget {
                                                                   child:
                                                                       ElevatedButton(
                                                                     onPressed:
-                                                                        () {},
+                                                                        () {
+                                                                      PersistentNavBarNavigator
+                                                                          .pushNewScreen(
+                                                                        context,
+                                                                        screen:
+                                                                            ProductDetailsScreen(
+                                                                          productName:
+                                                                              i.name,
+                                                                          url: i
+                                                                              .image,
+                                                                          details:
+                                                                              i.description,
+                                                                          units: i
+                                                                              .numPerItem
+                                                                              .toString(),
+                                                                          cartoon: i
+                                                                              .itemPerCarton
+                                                                              .toString(),
+                                                                          category:
+                                                                              i.category,
+                                                                          cartoonPrice: i
+                                                                              .salePrice
+                                                                              .toString(),
+                                                                          id: i
+                                                                              .id,
+                                                                        ),
+                                                                        withNavBar:
+                                                                            true,
+                                                                        pageTransitionAnimation:
+                                                                            PageTransitionAnimation.cupertino,
+                                                                      );
+                                                                    },
                                                                     child: Text(
-                                                                      'add_to_cart'
-                                                                          .tr,
+                                                                      i.name,
                                                                       style:
                                                                           TextStyle(
                                                                         color: Colors
@@ -514,92 +550,151 @@ class AgentHomeScreen extends StatelessWidget {
                                                     return Builder(
                                                       builder: (BuildContext
                                                           context) {
-                                                        return Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 150,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.3,
-                                                              child: Card(
-                                                                elevation: 5,
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15.0),
-                                                                ),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    i.image,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            PersistentNavBarNavigator
+                                                                .pushNewScreen(
+                                                              context,
+                                                              screen:
+                                                                  ProductDetailsScreen(
+                                                                productName:
+                                                                    i.name,
+                                                                url: i.image,
+                                                                details: i
+                                                                    .description,
+                                                                units: i
+                                                                    .numPerItem
+                                                                    .toString(),
+                                                                cartoon: i
+                                                                    .itemPerCarton
+                                                                    .toString(),
+                                                                category:
+                                                                    i.category,
+                                                                cartoonPrice: i
+                                                                    .salePrice
+                                                                    .toString(),
+                                                                id: i.id,
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            FadeInLeft(
-                                                              child: SizedBox(
+                                                              withNavBar: true,
+                                                              pageTransitionAnimation:
+                                                                  PageTransitionAnimation
+                                                                      .cupertino,
+                                                            );
+                                                          },
+                                                          child: Column(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 150,
                                                                 width: MediaQuery.of(
                                                                             context)
                                                                         .size
                                                                         .width *
                                                                     0.3,
-                                                                height: 29,
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  child: Text(
-                                                                    'add_to_cart'
-                                                                        .tr,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
+                                                                child: Card(
+                                                                  elevation: 5,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15.0),
+                                                                  ),
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      i.image,
+                                                                      fit: BoxFit
+                                                                          .cover,
                                                                     ),
                                                                   ),
-                                                                  style:
-                                                                      ButtonStyle(
-                                                                    backgroundColor: MaterialStateProperty.all<
-                                                                            Color>(
-                                                                        AppColors
-                                                                            .red),
-                                                                    shape: MaterialStateProperty
-                                                                        .all<
-                                                                            RoundedRectangleBorder>(
-                                                                      RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12.0),
-                                                                        side:
-                                                                            BorderSide(
-                                                                          color:
-                                                                              AppColors.red,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              FadeInLeft(
+                                                                child: SizedBox(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.3,
+                                                                  height: 29,
+                                                                  child:
+                                                                      ElevatedButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      PersistentNavBarNavigator
+                                                                          .pushNewScreen(
+                                                                        context,
+                                                                        screen:
+                                                                            ProductDetailsScreen(
+                                                                          productName:
+                                                                              i.name,
+                                                                          url: i
+                                                                              .image,
+                                                                          details:
+                                                                              i.description,
+                                                                          units: i
+                                                                              .numPerItem
+                                                                              .toString(),
+                                                                          cartoon: i
+                                                                              .itemPerCarton
+                                                                              .toString(),
+                                                                          category:
+                                                                              i.category,
+                                                                          cartoonPrice: i
+                                                                              .salePrice
+                                                                              .toString(),
+                                                                          id: i
+                                                                              .id,
+                                                                        ),
+                                                                        withNavBar:
+                                                                            true,
+                                                                        pageTransitionAnimation:
+                                                                            PageTransitionAnimation.cupertino,
+                                                                      );
+                                                                    },
+                                                                    child: Text(
+                                                                      i.name,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                    ),
+                                                                    style:
+                                                                        ButtonStyle(
+                                                                      backgroundColor: MaterialStateProperty.all<
+                                                                              Color>(
+                                                                          AppColors
+                                                                              .red),
+                                                                      shape: MaterialStateProperty
+                                                                          .all<
+                                                                              RoundedRectangleBorder>(
+                                                                        RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(12.0),
+                                                                          side:
+                                                                              BorderSide(
+                                                                            color:
+                                                                                AppColors.red,
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         );
                                                       },
                                                     );
@@ -696,92 +791,151 @@ class AgentHomeScreen extends StatelessWidget {
                                                     return Builder(
                                                       builder: (BuildContext
                                                           context) {
-                                                        return Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 150,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.3,
-                                                              child: Card(
-                                                                elevation: 5,
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15.0),
-                                                                ),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    i.image,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            PersistentNavBarNavigator
+                                                                .pushNewScreen(
+                                                              context,
+                                                              screen:
+                                                                  ProductDetailsScreen(
+                                                                productName:
+                                                                    i.name,
+                                                                url: i.image,
+                                                                details: i
+                                                                    .description,
+                                                                units: i
+                                                                    .numPerItem
+                                                                    .toString(),
+                                                                cartoon: i
+                                                                    .itemPerCarton
+                                                                    .toString(),
+                                                                category:
+                                                                    i.category,
+                                                                cartoonPrice: i
+                                                                    .salePrice
+                                                                    .toString(),
+                                                                id: i.id,
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            FadeInLeft(
-                                                              child: SizedBox(
+                                                              withNavBar: true,
+                                                              pageTransitionAnimation:
+                                                                  PageTransitionAnimation
+                                                                      .cupertino,
+                                                            );
+                                                          },
+                                                          child: Column(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 150,
                                                                 width: MediaQuery.of(
                                                                             context)
                                                                         .size
                                                                         .width *
                                                                     0.3,
-                                                                height: 29,
-                                                                child:
-                                                                    ElevatedButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  child: Text(
-                                                                    'add_to_cart'
-                                                                        .tr,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
+                                                                child: Card(
+                                                                  elevation: 5,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15.0),
+                                                                  ),
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      i.image,
+                                                                      fit: BoxFit
+                                                                          .cover,
                                                                     ),
                                                                   ),
-                                                                  style:
-                                                                      ButtonStyle(
-                                                                    backgroundColor: MaterialStateProperty.all<
-                                                                            Color>(
-                                                                        AppColors
-                                                                            .red),
-                                                                    shape: MaterialStateProperty
-                                                                        .all<
-                                                                            RoundedRectangleBorder>(
-                                                                      RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12.0),
-                                                                        side:
-                                                                            BorderSide(
-                                                                          color:
-                                                                              AppColors.red,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              FadeInLeft(
+                                                                child: SizedBox(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.3,
+                                                                  height: 29,
+                                                                  child:
+                                                                      ElevatedButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      PersistentNavBarNavigator
+                                                                          .pushNewScreen(
+                                                                        context,
+                                                                        screen:
+                                                                            ProductDetailsScreen(
+                                                                          productName:
+                                                                              i.name,
+                                                                          url: i
+                                                                              .image,
+                                                                          details:
+                                                                              i.description,
+                                                                          units: i
+                                                                              .numPerItem
+                                                                              .toString(),
+                                                                          cartoon: i
+                                                                              .itemPerCarton
+                                                                              .toString(),
+                                                                          category:
+                                                                              i.category,
+                                                                          cartoonPrice: i
+                                                                              .salePrice
+                                                                              .toString(),
+                                                                          id: i
+                                                                              .id,
+                                                                        ),
+                                                                        withNavBar:
+                                                                            true,
+                                                                        pageTransitionAnimation:
+                                                                            PageTransitionAnimation.cupertino,
+                                                                      );
+                                                                    },
+                                                                    child: Text(
+                                                                      i.name,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                    ),
+                                                                    style:
+                                                                        ButtonStyle(
+                                                                      backgroundColor: MaterialStateProperty.all<
+                                                                              Color>(
+                                                                          AppColors
+                                                                              .red),
+                                                                      shape: MaterialStateProperty
+                                                                          .all<
+                                                                              RoundedRectangleBorder>(
+                                                                        RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(12.0),
+                                                                          side:
+                                                                              BorderSide(
+                                                                            color:
+                                                                                AppColors.red,
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         );
                                                       },
                                                     );

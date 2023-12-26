@@ -13,7 +13,7 @@ class SpecialProductsResponseModel {
   int? salePrice;
   String? added;
   String? barcode;
-  int? category;
+  String? category;
 
   SpecialProductsResponseModel(
       {this.id,

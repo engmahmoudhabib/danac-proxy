@@ -15,6 +15,25 @@ class CartProvider extends GetConnect {
         print(response.body);
         return Left(CreateCartResponseModel.fromJson(response.body));
       } else {
+         print(response.body);
+        return Right(response.body);
+      }
+    } catch (e) {
+      print(e.toString());
+      return Right(e.toString());
+    }
+  }
+
+  Future<Either<String?, String?>> deleteProduct(id) async {
+    try {
+      final response = await delete(
+        API.deleteItemFromCartURL + '$id/',
+      );
+
+      if (response.status.isOk) {
+        print(response.body);
+        return Left('deleteed successfully');
+      } else {
         return Right(response.body);
       }
     } catch (e) {
@@ -45,11 +64,10 @@ class CartProvider extends GetConnect {
 
   Future<Either<AddOrderResponseModel, String?>> addOrder(cartID, date) async {
     try {
-      final response = await post(
-          API.addOrderURL + '$cartID/', {'delivery_date': date});
+      final response =
+          await post(API.addOrderURL + '$cartID/', {'delivery_date': date});
 
       if (response.status.isOk) {
-        print(response.body);
         return Left(AddOrderResponseModel.fromJson(response.body));
       } else {
         return Right(response.body);

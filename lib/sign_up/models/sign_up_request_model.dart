@@ -3,12 +3,20 @@ class SignUpRequestModel {
   String? password;
   String? username;
   String? email;
+  String? deviceToken;
+  String? deviceType;
+  String? x;
+  String? y;
 
   SignUpRequestModel({
     this.phonenumber,
     this.password,
     this.username,
     this.email,
+    this.deviceToken,
+    this.deviceType,
+    this.x,
+    this.y,
   });
 
   SignUpRequestModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +32,10 @@ class SignUpRequestModel {
     data['password'] = this.password;
     data['username'] = this.username;
     data['email'] = this.email;
+    data['device_token'] = this.deviceToken;
+    data['device_type'] = this.deviceType;
+    data['x'] = this.x;
+    data['y'] = this.y;
     return data;
   }
 }

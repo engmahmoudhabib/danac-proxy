@@ -216,11 +216,21 @@ class CartScreen extends StatelessWidget {
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(8.0),
-                                                            child: Icon(
-                                                              Icons.delete,
-                                                              color:
-                                                                  Colors.grey,
-                                                              size: 25,
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                controller.deleteProduct(
+                                                                    controller
+                                                                        .cartItems[
+                                                                            index]
+                                                                        .Products
+                                                                        .id);
+                                                              },
+                                                              child: Icon(
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors.grey,
+                                                                size: 25,
+                                                              ),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -344,7 +354,7 @@ class CartScreen extends StatelessWidget {
                                       )
                                     : ElevatedButton(
                                         onPressed: () {
-                                          addOrderDialog(context , controller);
+                                          addOrderDialog(context, controller);
                                         },
                                         child: Text(
                                           'order'.tr,

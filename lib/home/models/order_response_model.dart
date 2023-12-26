@@ -4,11 +4,11 @@ class OrderResponseModel {
   String? name;
   String? phonenumber;
   List<Products>? products;
-  int? total;
+  double? total;
   int? productsNum;
   String? created;
-  int? longitude;
-  int? latitude;
+  double? longitude;
+  double? latitude;
 
   OrderResponseModel(
       {this.clientId,
@@ -33,11 +33,11 @@ class OrderResponseModel {
         products!.add(new Products.fromJson(v));
       });
     }
-    total = json['total'];
+    total = double.parse(json['total'].toString());
     productsNum = json['products_num'];
     created = json['created'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
+    longitude = double.parse(json['longitude'].toString());
+    latitude = double.parse(json['latitude'].toString());
   }
 
   Map<String, dynamic> toJson() {
@@ -78,7 +78,7 @@ class Products {
     product = json['product'];
     order = json['order'];
     quantity = json['quantity'];
-    totalPrice =double.parse( json['total_price'].toString());
+    totalPrice = double.parse(json['total_price'].toString());
     image = json['image'];
     description = json['description'];
   }

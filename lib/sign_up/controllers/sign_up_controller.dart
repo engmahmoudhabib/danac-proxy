@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:storeapp/sign_up/providers/sign_up_provider.dart';
-import 'package:storeapp/sign_up/views/widgets/set_location_dialog.dart';
+import 'package:storeapp/sign_up/views/screens/waiting_screen.dart';
 
 class SignUpController extends GetxController {
   RxBool isLoading = false.obs;
@@ -19,17 +18,9 @@ class SignUpController extends GetxController {
       phoneController?.text,
       passwordController?.text,
       emailController?.text,
-      
     );
     if (response.isLeft()) {
-      final result = response.fold((l) => l, (r) => null);
-      GetStorage().write('phone', result?.informationUser?.phonenumber);
-      GetStorage().write('access', result?.tokens?.accsess);
-      GetStorage().write('refresh', result?.tokens?.refresh);
-      GetStorage().write('name', result?.informationUser?.username);
-      GetStorage().write('email', result?.informationUser?.email);
-      YYDialogDemo(context);
-    
+      Get.offAll(WaitingScreen());
     } else if (response.isRight()) {
       Get.defaultDialog(
         title: 'error'.tr,

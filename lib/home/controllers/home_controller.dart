@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:google_directions_api/google_directions_api.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,6 +11,7 @@ import 'package:google_places_for_flutter/google_places_for_flutter.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/constants.dart';
@@ -23,6 +25,7 @@ import 'package:storeapp/home/providers/cart_provider.dart';
 import 'package:storeapp/home/providers/orders_provider.dart';
 import 'package:storeapp/home/providers/points_provider.dart';
 import 'package:storeapp/home/providers/products_provider.dart';
+import 'package:storeapp/home/providers/profile_provider.dart';
 import 'package:storeapp/home/views/screens/agent_home_screen.dart';
 import 'package:storeapp/home/views/screens/agent_products_screen.dart';
 import 'package:storeapp/home/views/screens/home_screen.dart';
@@ -31,7 +34,8 @@ import 'package:storeapp/home/views/widgets/order_success_dialog.dart';
 import 'package:storeapp/notifications/views/screens/notifications_screen.dart';
 import 'package:storeapp/settings/views/screens/settings_screen.dart';
 
-class HomeController extends GetxController with GetSingleTickerProviderStateMixin{
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late PersistentTabController controller;
   RxBool isLoading = false.obs;
   RxBool isLoadingSearch = false.obs;
@@ -53,19 +57,79 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   final CartProvider _cartProvider = CartProvider();
   final OrderProvider _orderProvider = OrderProvider();
   final PointsProvider _pointsProvider = PointsProvider();
+  final ProfileProvider _profileProvider = ProfileProvider();
   RxList order = <OrderResponseModel>[].obs;
-late Completer<GoogleMapController> googleMapsController = Completer();
+  late Completer<GoogleMapController> googleMapsController = Completer();
   var destination = "".obs;
   var distanceLeft = "".obs;
   var timeLeft = "".obs;
   var mapStatus = "".obs;
   var arrived = true.obs;
   var gettingRoute = false.obs;
+  XFile? image;
   var markers = <MarkerId, Marker>{}.obs;
   List<LatLng> polylineCoordinates = <LatLng>[].obs;
   Set<Polyline> polyline = <Polyline>{}.obs;
   Animation<double>? animation;
   LatLng destinationCoordinates = const LatLng(0, 0);
+  removeImage(refresh) {
+    image = null;
+    refresh();
+    Navigator.pop(Get.overlayContext!, true);
+  }
+
+  Future pickImageFromGallery(refresh) async {
+    final img = await ImagePicker().pickImage(source: ImageSource.gallery);
+    image = XFile(img!.path);
+    refresh();
+    Navigator.pop(Get.overlayContext!, true);
+  }
+
+  Future pickImageFromCamera(refresh) async {
+    final img = await ImagePicker().pickImage(source: ImageSource.camera);
+    image = XFile(img!.path);
+    refresh();
+    Navigator.pop(Get.overlayContext!, true);
+  }
+
+  updateProfile() async {
+    if (image != null) {
+      Uint8List? compressedFile =
+          await FlutterImageCompress.compressWithFile(image!.path, quality: 90);
+      isLoading.value = true;
+      final response =
+          await _profileProvider.updateProfile(compressedFile!, "1");
+      if (response.isLeft()) {
+        final result = response.fold((l) => l, (r) => null);
+        GetStorage().write('image', result?.image?.image);
+      } else if (response.isRight()) {
+        Get.defaultDialog(
+          title: 'error'.tr,
+          content: Text(
+            'please_try_again'.tr,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+      }
+      isLoading.value = false;
+    } else {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'image_empty'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+  }
 
   CameraPosition initialCameraPosition = const CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -120,7 +184,8 @@ late Completer<GoogleMapController> googleMapsController = Completer();
 
   addToCart(context, product) async {
     isAddingToCart.value = true;
-    final response = await _cartProvider.addToCart(9, product);
+    final response =
+        await _cartProvider.addToCart(GetStorage().read('id'), product);
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       cartId.value = result!.cart!;
@@ -357,7 +422,8 @@ late Completer<GoogleMapController> googleMapsController = Completer();
   }
 
   List<Widget> buildScreens() {
-    return GetStorage().read('env') == 'agent' || GetStorage().read('env') == 'driver'
+    return GetStorage().read('env') == 'agent' ||
+            GetStorage().read('env') == 'driver'
         ? [
             AgentHomeScreen(),
             AgentProductsScreen(),
@@ -421,14 +487,13 @@ late Completer<GoogleMapController> googleMapsController = Completer();
       getSpecialProducts();
       getProductsByCategory(0);
       getOrders();
-      getMyPoints(9);
-   
+      getMyPoints(GetStorage().read('id'));
     }
 
     super.onInit();
   }
 
-    Future moveMapCamera(LatLng target,
+  Future moveMapCamera(LatLng target,
       {double zoom = 16, double bearing = 0}) async {
     CameraPosition newCameraPosition =
         CameraPosition(target: target, zoom: zoom, bearing: bearing);
@@ -490,7 +555,7 @@ late Completer<GoogleMapController> googleMapsController = Completer();
         polylineCoordinates.clear();
         update();
       }
-      if(gettingRoute.value) return;
+      if (gettingRoute.value) return;
 
       gettingRoute.value = true;
 
@@ -526,9 +591,8 @@ late Completer<GoogleMapController> googleMapsController = Completer();
         await positionCameraToRoute(polyline);
       }
     } catch (e) {
-      
-    }finally{
-       gettingRoute.value = false;
+    } finally {
+      gettingRoute.value = false;
     }
   }
 
@@ -570,8 +634,8 @@ late Completer<GoogleMapController> googleMapsController = Completer();
     MarkerId id = const MarkerId("driverMarker");
 
     AnimationController animationController = AnimationController(
-      duration: const Duration(seconds: 3), vsync: this,
-  
+      duration: const Duration(seconds: 3),
+      vsync: this,
     )..repeat(reverse: false);
 
     Tween<double> tween = Tween(begin: 0, end: 1);
@@ -632,5 +696,26 @@ late Completer<GoogleMapController> googleMapsController = Completer();
     distanceLeft.value =
         "${(distance / 1000).toStringAsFixed(2)} km"; // in kilometers
     timeLeft.value = "${(duration / 60).toStringAsFixed(2)} mins"; // in minutes
+  }
+
+  deleteProduct(id) async {
+    isLoading.value = true;
+    final response = await _cartProvider.deleteProduct(id);
+    if (response.isLeft()) {
+      getCartItems();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
   }
 }

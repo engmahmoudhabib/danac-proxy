@@ -12,6 +12,7 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -34,7 +35,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           top: MediaQuery.of(context).size.height * 0.07),
                       child: ListTile(
                         title: Text(
-                          'reset_pass'.tr,
+                          'reset_password_title'.tr,
                           textDirection: Get.locale!.languageCode == 'ar'
                               ? TextDirection.rtl
                               : TextDirection.ltr,
@@ -45,7 +46,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          'please_renter'.tr,
+                          'reset_password_sub_title'.tr,
                           textDirection: Get.locale!.languageCode == 'ar'
                               ? TextDirection.rtl
                               : TextDirection.ltr,
@@ -79,7 +80,7 @@ class ResetPasswordScreen extends StatelessWidget {
               ),
               FadeInDown(
                 child: CustomTextField(
-                  controller: controller.password1Controller,
+                  controller: controller.password2Controller,
                   prefixIcon: AppImages.lock,
                   suffixIcon: AppImages.eye,
                   hint: 'confirm_newpassword'.tr,
@@ -102,7 +103,9 @@ class ResetPasswordScreen extends StatelessWidget {
                           ),
                         )
                       : ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.updatePassword();
+                          },
                           child: Text(
                             'reset_pass'.tr,
                             style: TextStyle(

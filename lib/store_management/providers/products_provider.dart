@@ -111,7 +111,7 @@ class ProductsProvider extends GetConnect {
     String? limitLess,
     String? limitMore,
     String? category,
-    String? notes,
+    String? notes, 
   ) async {
     final headers = {
       "content_type":

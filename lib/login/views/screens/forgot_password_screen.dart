@@ -2,9 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:storeapp/core/colors.dart';
-import 'package:storeapp/core/images.dart';
 import 'package:storeapp/login/controller/login_controller.dart';
-import 'package:storeapp/login/views/screens/otp_screen.dart';
 import 'package:storeapp/login/views/widgets/custom_textField.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
@@ -91,7 +89,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                           )
                         : ElevatedButton(
                             onPressed: () {
-                              Get.to(OTPScreen());
+                              controller.getOTP();
                             },
                             child: Text(
                               'send_code'.tr,

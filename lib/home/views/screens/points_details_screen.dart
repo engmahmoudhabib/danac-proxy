@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 import 'package:storeapp/home/controllers/home_controller.dart';
@@ -120,11 +121,11 @@ class PointsDetailsScreen extends StatelessWidget {
                                   indicatorColor: Colors.black,
                                   onTap: (value) {
                                     if (value == 0) {
-                                      controller.getMyPoints(9);
+                                      controller.getMyPoints(GetStorage().read('id'));
                                     } else if (value == 1) {
-                                      controller.getUsedPoints(9);
+                                      controller.getUsedPoints(GetStorage().read('id'));
                                     } else if (value == 2) {
-                                      controller.getExpiredPoints(9);
+                                      controller.getExpiredPoints(GetStorage().read('id'));
                                     }
                                   },
                                   indicatorPadding: EdgeInsets.only(

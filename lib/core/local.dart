@@ -194,7 +194,25 @@ class MyLocale implements Translations {
           'proxy_n': 'مندوب',
           'conducteur': 'سائق',
           'follow_order': 'توصيل الطلب',
-          'phone_or_email': 'الموبايل أو رقم الهاتف'
+          'phone_or_email': 'الموبايل أو الإيميل',
+          "Location permissions are permanently denied":
+              'تم رفض أذونات الموقع بشكل دائم',
+          "GPS Service is not enabled, turn on GPS location":
+              "خدمة GPS غير ممكّنة، قم بتشغيل موقع GPS",
+          'reset_password_title': 'إعادة تعيين كلمة المرور',
+          'reset_password_sub_title':
+              'الرجاء إدخال كلمة المرور الجديدة و تأكيدها',
+          'confirm_password': 'تأكيد كلمة المرور',
+          'password_changed_successfully': 'تم تغيير كلمة المرور بنجاح',
+          'how_to_use_points': 'كيف يمكن أن استخدم نقاطي ؟',
+          'explain':
+              'سيتم منحك نقاط مجانية في رصيد نقاطك من خلال إتمام الصفقات التجارية وعمليات البيع الخاصة بنا وإرسال طلبات إضافية .ومن ثم يمكنك سيتم منحك هدايا وعروض مميزة وخصومات حصرية لعملائنا المميزين .'
+        , 'congrats':'مبروك , لقد تم التحقق من الرمز. يمكنك الآن استخدام التطبيق ' , 
+        'wait_account' : 'انتظار قبول الحساب' , 
+        'please_wait':'الرجاء انتظار قبول حسابك حتى تتمكن من استخدام التطبيق' , 
+        'success' :'نجاح العملية' , 
+         "The changed image Profile has been successfully." : 'تم تغيير الصورة الشخصية بنجاح'
+        
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -396,6 +414,25 @@ class MyLocale implements Translations {
           'conducteur': 'conducteur',
           'follow_order': 'Livraison de la commande',
           'phone_or_email': 'Email ou numéro de téléphone',
+          "Location permissions are permanently denied":
+              'Les autorisations du site ont été définitivement refusées',
+          "GPS Service is not enabled, turn on GPS location":
+              "Le service GPS n'est pas activé, activez la localisation GPS",
+          'reset_password_title': 'Réinitialisation du mot de passe',
+          'reset_password_sub_title':
+              'Veuillez saisir le nouveau mot de passe et le confirmer',
+          'confirm_password': 'Confirmez le mot de passe',
+          'password_changed_successfully':
+              'Le mot de passe a été modifié avec succès',
+          'how_to_use_points': 'Comment puis-je utiliser mes points ?',
+          'explain':
+              'Vous recevrez des points gratuits dans votre solde de points en effectuant des transactions commerciales et des ventes avec nous et en soumettant des commandes supplémentaires.Ensuite, vous recevrez des cadeaux, des offres spéciales et des réductions exclusives pour nos clients distingués.'
+        
+        , 'congrats': "Félicitations, le code a été vérifié. Vous pouvez maintenant utiliser l'application" , 
+          'wait_account' :'En attente que le compte soit accepté' , 
+             'please_wait': "Veuillez attendre que votre compte soit approuvé pour pouvoir utiliser l'application", 
+              'success' : 'opération accomplie avec succès' , 
+              "The changed image Profile has been successfully." : ' Votre photo de profil a été modifiée avec succès'
         }
       };
 }

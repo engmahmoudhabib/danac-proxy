@@ -70,7 +70,7 @@ class MyPointsScreen extends StatelessWidget {
                               SizedBox(
                                 width: 200,
                                 child: Text(
-                                  '${controller.points.first.number}' +
+                               ( controller.points.isEmpty ? '0':  '${controller.points.first.number}') +
                                       ' ' +
                                       'points'.tr,
                                   textAlign: TextAlign.center,
@@ -99,7 +99,7 @@ class MyPointsScreen extends StatelessWidget {
                               Text(
                                 'points_expired'.tr +
                                     ' ' +
-                                    '${controller.points.first.expireDate}'.tr,
+                                    (controller.points.isEmpty ? '----': '${controller.points.first.expireDate}'.tr),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,

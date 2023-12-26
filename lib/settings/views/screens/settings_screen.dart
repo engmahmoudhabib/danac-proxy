@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -170,32 +172,40 @@ class SettingsScreen extends StatelessWidget {
                       child: Center(
                         child: ListTile(
                           title: Text(
-                            'User Name',
+                            GetStorage().read('phone'),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          subtitle: Text(
+                          /*  subtitle: Text(
                             'mahmoud@gmail.com',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
-                          ),
+                          ), */
                           leading: Container(
                             width: 100,
                             height: 100,
-                            child: Icon(
-                              Icons.person,
-                              size: 40,
-                              color: Colors.white,
-                            ),
+                            child: GetStorage().read('image') == null
+                                ? Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: Colors.white,
+                                  )
+                                : null,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.grey.withOpacity(0.5),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  GetStorage().read('image'),
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -253,7 +263,7 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ListTile(
-                    onTap: (){
+                    onTap: () {
                       PersistentNavBarNavigator.pushNewScreen(
                         context,
                         screen: MyOrdersScreen(),
@@ -299,7 +309,7 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
                   child: ListTile(
-                    onTap: (){
+                    onTap: () {
                       PersistentNavBarNavigator.pushNewScreen(
                         context,
                         screen: AgentSettingsScreen(),

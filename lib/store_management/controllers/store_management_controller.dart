@@ -219,7 +219,7 @@ class StoreManagementController extends GetxController {
         sellPrice?.text,
         itemsPerUnit?.text,
         unitsPerCartoon?.text,
-        limitLess?.text,
+        limitLess?.text, 
         limitMore?.text,
         cat.value,
         notes?.text,

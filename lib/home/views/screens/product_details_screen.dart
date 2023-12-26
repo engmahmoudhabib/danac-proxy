@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:storeapp/core/colors.dart';
+import 'package:storeapp/core/images.dart';
 import 'package:storeapp/home/controllers/home_controller.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class ProductDetailsScreen extends StatelessWidget {
   final String details;
   final String units;
   final String cartoon;
-  final int category;
+  final String category;
   final String cartoonPrice;
   final int id;
   ProductDetailsScreen({
@@ -52,11 +53,7 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          Icon(
-            Icons.shopping_cart,
-            color: AppColors.red,
-            size: 28,
-          )
+         Image.asset(AppImages.cart)
         ],
       ),
       body: SizedBox(
