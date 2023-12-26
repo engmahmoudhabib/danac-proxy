@@ -1,18 +1,18 @@
 class LoginResponseModel {
-  String? phonenumber;
+  String? username;
   Tokens? tokens;
 
-  LoginResponseModel({this.phonenumber, this.tokens});
+  LoginResponseModel({this.username, this.tokens});
 
   LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    phonenumber = json['phonenumber'];
+    username = json['username'];
     tokens =
         json['tokens'] != null ? new Tokens.fromJson(json['tokens']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['phonenumber'] = this.phonenumber;
+    data['username'] = this.username;
     if (this.tokens != null) {
       data['tokens'] = this.tokens!.toJson();
     }

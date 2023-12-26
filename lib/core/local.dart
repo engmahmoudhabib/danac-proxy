@@ -186,12 +186,15 @@ class MyLocale implements Translations {
           'enter_otp_code': 'أدخل رمز التحقق',
           'please_insert_otp':
               'يرجى إدخال رمز التحقق المرسل إلى البريد الالكتروني',
-          'confirm_code': 'تأكيد الرمز' ,
-          'reset_pass': 'إعادة تعيين كلمة المرور' , 
-          'please_renter':'الرجاء إدخال كلمة المرور الجديدة وتأكيدها' , 
-          'new_password' : 'كلمة المرور الجديدة', 
-          'confirm_newpassword' :'تأكيد كلمة المرور الجديدة' , 
-          'proxy_n' :'مندوب' ,'conducteur':'سائق'
+          'confirm_code': 'تأكيد الرمز',
+          'reset_pass': 'إعادة تعيين كلمة المرور',
+          'please_renter': 'الرجاء إدخال كلمة المرور الجديدة وتأكيدها',
+          'new_password': 'كلمة المرور الجديدة',
+          'confirm_newpassword': 'تأكيد كلمة المرور الجديدة',
+          'proxy_n': 'مندوب',
+          'conducteur': 'سائق',
+          'follow_order': 'توصيل الطلب',
+          'phone_or_email': 'الموبايل أو رقم الهاتف'
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -384,12 +387,15 @@ class MyLocale implements Translations {
           'please_insert_otp':
               'Veuillez saisir le code de vérification envoyé à votre adresse e-mail',
           'confirm_code': 'Confirmez le code',
-          'reset_pass': 'Réinitialisation du mot de passe' , 
-          'please_renter': 'Veuillez saisir et confirmer votre nouveau mot de passe' , 
-          'new_password' :'nouveau mot de passe' , 
-          'confirm_newpassword' : 'Confirmez le mot de passe', 
-          'proxy_n' :'Représentant' , 
-          'conducteur':'conducteur'
+          'reset_pass': 'Réinitialisation du mot de passe',
+          'please_renter':
+              'Veuillez saisir et confirmer votre nouveau mot de passe',
+          'new_password': 'nouveau mot de passe',
+          'confirm_newpassword': 'Confirmez le mot de passe',
+          'proxy_n': 'Représentant',
+          'conducteur': 'conducteur',
+          'follow_order': 'Livraison de la commande',
+          'phone_or_email': 'Email ou numéro de téléphone',
         }
       };
 }

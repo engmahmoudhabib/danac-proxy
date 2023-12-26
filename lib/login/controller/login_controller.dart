@@ -18,7 +18,7 @@ class LoginController extends GetxController {
         phoneController?.text, passwordController?.text);
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
-      GetStorage().write('phone', result?.phonenumber);
+      GetStorage().write('phone', result?.username);
       GetStorage().write('access', result?.tokens?.access);
       GetStorage().write('refresh', result?.tokens?.refresh);
       Get.offAllNamed(Routes.HOME);

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:storeapp/core/app_pages.dart';
-
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 import 'package:storeapp/login/controller/login_controller.dart';
@@ -30,8 +29,11 @@ class LoginScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.red,
                     borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(40.0),
-                        bottomLeft: Radius.circular(40.0)),
+                      bottomRight: Radius.circular(40.0),
+                      bottomLeft: Radius.circular(
+                        40.0,
+                      ),
+                    ),
                   ),
                   child: FadeInUp(
                     child: Padding(
@@ -73,10 +75,10 @@ class LoginScreen extends StatelessWidget {
                   controller: controller.phoneController,
                   prefixIcon: AppImages.phone,
                   suffixIcon: null,
-                  hint: 'phone'.tr,
+                  hint: 'phone_or_email'.tr,
                   isPassword: false,
                   textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.phone,
+                  textInputType: TextInputType.emailAddress,
                 ),
               ),
               SizedBox(
@@ -91,6 +93,9 @@ class LoginScreen extends StatelessWidget {
                   isPassword: true,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.emailAddress,
+                  onSubmitted: (val) {
+                    controller.login();
+                  },
                 ),
               ),
               SizedBox(
@@ -103,6 +108,7 @@ class LoginScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Get.to(ForgotPasswordScreen());
+                        // Get.to(NavigationScreen());
                       },
                       child: Text(
                         'forgot_password'.tr,
