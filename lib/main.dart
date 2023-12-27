@@ -18,7 +18,7 @@ Future<void> main() async {
   );
   await FirebasAPI().initNotifications();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  GetStorage().write('env', 'driver');
+  GetStorage().write('env', 'agent');
   
   runApp(Phoenix(child: const StoreApp()));
 }
@@ -36,7 +36,7 @@ class _StoreAppState extends State<StoreApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Store App',
+      title: 'DANAC CLIENT',
       home: LoginScreen(),
       
       translations: MyLocale(),

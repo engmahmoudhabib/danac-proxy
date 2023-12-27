@@ -23,6 +23,9 @@ logout() => Get.defaultDialog(
         onPressed: () {
           GetStorage().remove('access');
           GetStorage().remove('refresh');
+           GetStorage().remove('id');
+            GetStorage().remove('image');
+            GetStorage().remove('phone');
           Get.offAllNamed(Routes.LOGIN);
         },
         child: Text(

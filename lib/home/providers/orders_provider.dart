@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:storeapp/core/api.dart';
 import 'package:storeapp/home/models/order_response_model.dart';
 import 'package:storeapp/home/models/orders_response_model.dart';
@@ -7,8 +8,15 @@ import 'package:storeapp/home/models/orders_response_model.dart';
 class OrderProvider extends GetConnect {
   Future<Either<List<OrdersResponseModel>, String?>> getOrders() async {
     try {
-      final response = await get(API.getOrdersURL);
+    
+      final response = await get(
+        API.getOrdersURL,
+        headers: {
+          'Authorization': 'Bearer ' + GetStorage().read('access'),
+        },
+      );
       if (response.status.isOk) {
+        
         Iterable l = response.body;
 
         List<OrdersResponseModel> res = List<OrdersResponseModel>.from(
@@ -28,6 +36,7 @@ class OrderProvider extends GetConnect {
     try {
       final response = await get(
         API.getOrderURL + '$id/',
+        
       );
       if (response.status.isOk) {
         print(response.body);

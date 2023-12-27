@@ -207,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )
                         : ElevatedButton(
                             onPressed: () {
-                              controller.updateProfile();
+                              controller.updateProfile(context);
                             },
                             child: Text(
                               'save'.tr,

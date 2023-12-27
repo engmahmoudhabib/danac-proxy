@@ -206,13 +206,17 @@ class MyLocale implements Translations {
           'password_changed_successfully': 'تم تغيير كلمة المرور بنجاح',
           'how_to_use_points': 'كيف يمكن أن استخدم نقاطي ؟',
           'explain':
-              'سيتم منحك نقاط مجانية في رصيد نقاطك من خلال إتمام الصفقات التجارية وعمليات البيع الخاصة بنا وإرسال طلبات إضافية .ومن ثم يمكنك سيتم منحك هدايا وعروض مميزة وخصومات حصرية لعملائنا المميزين .'
-        , 'congrats':'مبروك , لقد تم التحقق من الرمز. يمكنك الآن استخدام التطبيق ' , 
-        'wait_account' : 'انتظار قبول الحساب' , 
-        'please_wait':'الرجاء انتظار قبول حسابك حتى تتمكن من استخدام التطبيق' , 
-        'success' :'نجاح العملية' , 
-         "The changed image Profile has been successfully." : 'تم تغيير الصورة الشخصية بنجاح'
-        
+              'سيتم منحك نقاط مجانية في رصيد نقاطك من خلال إتمام الصفقات التجارية وعمليات البيع الخاصة بنا وإرسال طلبات إضافية .ومن ثم يمكنك سيتم منحك هدايا وعروض مميزة وخصومات حصرية لعملائنا المميزين .',
+          'congrats':
+              'مبروك , لقد تم التحقق من الرمز. يمكنك الآن استخدام التطبيق ',
+          'wait_account': 'انتظار قبول الحساب',
+          'please_wait':
+              'الرجاء انتظار قبول حسابك حتى تتمكن من استخدام التطبيق',
+          'success': 'نجاح العملية',
+          "The changed image Profile has been successfully.":
+              'تم تغيير الصورة الشخصية بنجاح',
+          'client_phone': 'رقم هاتف العميل',
+          'client_address': 'عنوان العميل'
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -426,13 +430,17 @@ class MyLocale implements Translations {
               'Le mot de passe a été modifié avec succès',
           'how_to_use_points': 'Comment puis-je utiliser mes points ?',
           'explain':
-              'Vous recevrez des points gratuits dans votre solde de points en effectuant des transactions commerciales et des ventes avec nous et en soumettant des commandes supplémentaires.Ensuite, vous recevrez des cadeaux, des offres spéciales et des réductions exclusives pour nos clients distingués.'
-        
-        , 'congrats': "Félicitations, le code a été vérifié. Vous pouvez maintenant utiliser l'application" , 
-          'wait_account' :'En attente que le compte soit accepté' , 
-             'please_wait': "Veuillez attendre que votre compte soit approuvé pour pouvoir utiliser l'application", 
-              'success' : 'opération accomplie avec succès' , 
-              "The changed image Profile has been successfully." : ' Votre photo de profil a été modifiée avec succès'
+              'Vous recevrez des points gratuits dans votre solde de points en effectuant des transactions commerciales et des ventes avec nous et en soumettant des commandes supplémentaires.Ensuite, vous recevrez des cadeaux, des offres spéciales et des réductions exclusives pour nos clients distingués.',
+          'congrats':
+              "Félicitations, le code a été vérifié. Vous pouvez maintenant utiliser l'application",
+          'wait_account': 'En attente que le compte soit accepté',
+          'please_wait':
+              "Veuillez attendre que votre compte soit approuvé pour pouvoir utiliser l'application",
+          'success': 'opération accomplie avec succès',
+          "The changed image Profile has been successfully.":
+              ' Votre photo de profil a été modifiée avec succès' , 
+               'client_phone': 'Numéro de téléphone du client' , 
+                'client_address':'Adresse du client'
         }
       };
 }

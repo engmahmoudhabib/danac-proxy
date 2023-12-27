@@ -62,7 +62,7 @@ class PointsDetailsScreen extends StatelessWidget {
                               SizedBox(
                                 width: 200,
                                 child: Text(
-                                  '${controller.points.first.number}' +
+                                  ( controller.points.isEmpty ? '0':  '${controller.points.first.number}') +
                                       ' ' +
                                       'points'.tr,
                                   textAlign: TextAlign.center,
@@ -89,9 +89,9 @@ class PointsDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'points_expired'.tr +
+                               'points_expired'.tr +
                                     ' ' +
-                                    '${controller.points.first.expireDate}'.tr,
+                                    (controller.points.isEmpty ? '----': '${controller.points.first.expireDate}'.tr),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -121,11 +121,11 @@ class PointsDetailsScreen extends StatelessWidget {
                                   indicatorColor: Colors.black,
                                   onTap: (value) {
                                     if (value == 0) {
-                                      controller.getMyPoints(GetStorage().read('id'));
+                                      controller.getMyPoints();
                                     } else if (value == 1) {
-                                      controller.getUsedPoints(GetStorage().read('id'));
+                                      controller.getUsedPoints();
                                     } else if (value == 2) {
-                                      controller.getExpiredPoints(GetStorage().read('id'));
+                                      controller.getExpiredPoints();
                                     }
                                   },
                                   indicatorPadding: EdgeInsets.only(
@@ -163,6 +163,7 @@ class PointsDetailsScreen extends StatelessWidget {
                             ),
                           ),
                           body: TabBarView(
+                            physics: const NeverScrollableScrollPhysics(),
                             children: [
                           controller.isLoading.value == true
               ? Center(
@@ -178,7 +179,7 @@ class PointsDetailsScreen extends StatelessWidget {
                                   child: GridView.count(
                                     crossAxisCount: 1,
                                     shrinkWrap: true,
-                                    childAspectRatio: 7 / 5,
+                                    childAspectRatio: 14 / 3,
                                     children: List.generate(
                                       controller.points.length,
                                       (int index) {
@@ -234,7 +235,7 @@ class PointsDetailsScreen extends StatelessWidget {
                                   child: GridView.count(
                                     crossAxisCount: 1,
                                     shrinkWrap: true,
-                                    childAspectRatio: 7 / 5,
+                                    childAspectRatio: 14 / 3,
                                     children: List.generate(
                                       controller.points.length,
                                       (int index) {
@@ -290,7 +291,7 @@ class PointsDetailsScreen extends StatelessWidget {
                                   child: GridView.count(
                                     crossAxisCount: 1,
                                     shrinkWrap: true,
-                                    childAspectRatio: 7 / 5,
+                                    childAspectRatio:  14 / 3,
                                     children: List.generate(
                                       controller.points.length,
                                       (int index) {

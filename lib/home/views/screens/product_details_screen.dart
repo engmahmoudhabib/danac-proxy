@@ -2,9 +2,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 import 'package:storeapp/home/controllers/home_controller.dart';
+import 'package:storeapp/home/views/screens/cart_screen.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final String productName;
@@ -53,7 +56,19 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
         ),
         actions: [
-         Image.asset(AppImages.cart)
+          InkWell(
+            onTap: () {
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: CartScreen(),
+                withNavBar: true,
+                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              );
+            },
+            child: Image.asset(
+              AppImages.cart,
+            ),
+          )
         ],
       ),
       body: SizedBox(
@@ -260,8 +275,11 @@ class ProductDetailsScreen extends StatelessWidget {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            
-                            controller.addToCart(context, id);
+                            if (GetStorage().read('env') == 'agent') {
+                              controller.addToCart(context, id);
+                            } else if (GetStorage().read('env') == 'driver') {
+                              controller.addToMedium2(context, id);
+                            } 
                           },
                           child: Text(
                             'add_to_cart'.tr,

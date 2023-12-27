@@ -1,12 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get_connect/connect.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:storeapp/core/api.dart';
 import 'package:storeapp/home/models/points_response_model.dart';
 
 class PointsProvider extends GetConnect {
-  Future<Either<List<PointsResponseModel>, String?>> getPoints(id) async {
+  Future<Either<List<PointsResponseModel>, String?>> getPoints() async {
     try {
-      final response = await get(API.pointsURL + '$id');
+      final response = await get(
+        API.pointsURL,
+        headers: {
+          'Authorization': 'Bearer ' + GetStorage().read('access'),
+        },
+      );
       if (response.status.isOk) {
         Iterable l = response.body;
 
@@ -23,10 +29,14 @@ class PointsProvider extends GetConnect {
     }
   }
 
-
- Future<Either<List<PointsResponseModel>, String?>> getUsedPoints(id) async {
+  Future<Either<List<PointsResponseModel>, String?>> getUsedPoints() async {
     try {
-      final response = await get(API.usedPointsURL + '$id');
+      final response = await get(
+        API.usedPointsURL,
+        headers: {
+          'Authorization': 'Bearer ' + GetStorage().read('access'),
+        },
+      );
       if (response.status.isOk) {
         Iterable l = response.body;
 
@@ -43,9 +53,14 @@ class PointsProvider extends GetConnect {
     }
   }
 
-Future<Either<List<PointsResponseModel>, String?>> getExpiredPoints(id) async {
+  Future<Either<List<PointsResponseModel>, String?>> getExpiredPoints() async {
     try {
-      final response = await get(API.expiredPointsURL + '$id');
+      final response = await get(
+        API.expiredPointsURL,
+        headers: {
+          'Authorization': 'Bearer ' + GetStorage().read('access'),
+        },
+      );
       if (response.status.isOk) {
         Iterable l = response.body;
 
@@ -61,6 +76,4 @@ Future<Either<List<PointsResponseModel>, String?>> getExpiredPoints(id) async {
       return Right('An error occurred: $e');
     }
   }
-
-
 }

@@ -10,6 +10,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 import 'package:storeapp/home/controllers/home_controller.dart';
+import 'package:storeapp/home/views/screens/order_screen.dart';
 import 'package:storeapp/home/views/screens/product_details_screen.dart';
 import 'package:storeapp/home/views/screens/special_elements_screen.dart';
 import 'package:storeapp/login/views/widgets/custom_textField.dart';
@@ -151,7 +152,7 @@ class AgentHomeScreen extends StatelessWidget {
                                   child: AnimationLimiter(
                                     child: GridView.count(
                                       crossAxisCount: 1,
-                                      childAspectRatio: 7/4,
+                                      childAspectRatio: 7 / 4,
                                       children: List.generate(
                                         2,
                                         (int index) {
@@ -165,17 +166,23 @@ class AgentHomeScreen extends StatelessWidget {
                                               child: FadeInAnimation(
                                                 child: InkWell(
                                                   onTap: () {
-                                                    if (index == 1) {}
+                                                    if (index == 0) {
+                                                  
+                                                    } if (index == 1) {
+                                                  
+                                                    }
                                                   },
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(18.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            18.0),
                                                     child: Card(
                                                       elevation: 5,
                                                       shape:
                                                           RoundedRectangleBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                15.0),
+                                                            BorderRadius
+                                                                .circular(15.0),
                                                       ),
                                                       child: Column(
                                                         mainAxisAlignment:
@@ -187,7 +194,8 @@ class AgentHomeScreen extends StatelessWidget {
                                                         children: [
                                                           index == 0
                                                               ? Image.asset(
-                                                                  AppImages.Truck)
+                                                                  AppImages
+                                                                      .Truck)
                                                               : Image.asset(
                                                                   AppImages
                                                                       .profile),
@@ -197,14 +205,17 @@ class AgentHomeScreen extends StatelessWidget {
                                                           Text(
                                                             index == 0
                                                                 ? 'proxy_n'.tr
-                                                                : 'conducteur'.tr,
-                                                            textAlign:
-                                                                TextAlign.center,
+                                                                : 'conducteur'
+                                                                    .tr,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
                                                               fontWeight:
-                                                                  FontWeight.w700,
+                                                                  FontWeight
+                                                                      .w700,
                                                               fontSize: 17,
-                                                              color: Colors.grey,
+                                                              color:
+                                                                  Colors.grey,
                                                             ),
                                                           ),
                                                         ],

@@ -7,6 +7,7 @@ import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/home/controllers/home_controller.dart';
 import 'package:storeapp/home/views/screens/product_details_screen.dart';
 
+// ignore: must_be_immutable
 class AgentProductsScreen extends StatelessWidget {
   AgentProductsScreen({super.key});
   HomeController controller = Get.put(HomeController());
@@ -33,6 +34,7 @@ class AgentProductsScreen extends StatelessWidget {
         child: Obx(
           () => DefaultTabController(
             length: 3,
+
             child: new Scaffold(
               appBar: new AppBar(
                 backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -80,6 +82,7 @@ class AgentProductsScreen extends StatelessWidget {
                 ),
               ),
               body: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   controller.isLoading.value == true
                       ? Center(

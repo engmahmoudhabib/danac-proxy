@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/connect.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:storeapp/core/api.dart';
 import 'package:storeapp/login/models/get_otp_response_model.dart';
@@ -26,12 +25,17 @@ class LoginProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(LoginResponseModel.fromJson(response.body));
       } else {
-       if(response.body['message_error'][0] == 'this account is not accepted'){
-         return Right('this account is not accepted');
-       } else
+        if (response.body.containsKey("message_error")) {
+          if (response.body['message_error'][0] ==
+              'this account is not active') {
+            return Right('this account is not accepted');
+          }
+        } else
+          print(response.body);
         return Right(response.body);
       }
     } catch (e) {
+      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -64,13 +68,12 @@ class LoginProvider extends GetConnect {
   ) async {
     try {
       final response = await post(
-       type == 0 ? API.acticateAccountOTP : API.sendOTPURL,
+        type == 0 ? API.acticateAccountOTP : API.sendOTPURL,
         {
           'code': otp,
         },
       );
       if (response.status.isOk) {
-        
         return Left(GetOTPResponseModel.fromJson(response.body));
       } else {
         print(response.body);

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:google_directions_api/google_directions_api.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,6 +17,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/constants.dart';
 import 'package:storeapp/home/models/cart_item_response_model.dart';
+import 'package:storeapp/home/models/medium_two_response_model.dart';
 import 'package:storeapp/home/models/order_response_model.dart';
 import 'package:storeapp/home/models/orders_response_model.dart';
 import 'package:storeapp/home/models/points_response_model.dart';
@@ -47,10 +49,14 @@ class HomeController extends GetxController
       .substring(0, DateTime.now().toString().indexOf(' '))
       .obs;
   TextEditingController? searchController = TextEditingController();
+  TextEditingController? clientNameController = TextEditingController();
+   TextEditingController? clientPhoneController = TextEditingController();
+    TextEditingController? clientAddressController = TextEditingController();
   RxList specialProducts = <SpecialProductsResponseModel>[].obs;
   RxList allProducts = <SearchlProductsResponseModel>[].obs;
   RxList searchProducts = <SearchlProductsResponseModel>[].obs;
   RxList cartItems = <GetCartItemsResponseModel>[].obs;
+  RxList cartMedium2Items = <MediumTwoResponseModel>[].obs;
   RxList orders = <OrdersResponseModel>[].obs;
   RxList points = <PointsResponseModel>[].obs;
   final ProductsProvider _productsProvider = ProductsProvider();
@@ -67,6 +73,7 @@ class HomeController extends GetxController
   var arrived = true.obs;
   var gettingRoute = false.obs;
   XFile? image;
+  RxInt medium2Id = 0.obs;
   var markers = <MarkerId, Marker>{}.obs;
   List<LatLng> polylineCoordinates = <LatLng>[].obs;
   Set<Polyline> polyline = <Polyline>{}.obs;
@@ -92,7 +99,7 @@ class HomeController extends GetxController
     Navigator.pop(Get.overlayContext!, true);
   }
 
-  updateProfile() async {
+  updateProfile(context) async {
     if (image != null) {
       Uint8List? compressedFile =
           await FlutterImageCompress.compressWithFile(image!.path, quality: 90);
@@ -102,6 +109,7 @@ class HomeController extends GetxController
       if (response.isLeft()) {
         final result = response.fold((l) => l, (r) => null);
         GetStorage().write('image', result?.image?.image);
+      Phoenix.rebirth(context);
       } else if (response.isRight()) {
         Get.defaultDialog(
           title: 'error'.tr,
@@ -189,7 +197,7 @@ class HomeController extends GetxController
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       cartId.value = result!.cart!;
-      print(cartId.value);
+
       addToCartSuccessDialog(context);
       getCartItems();
     } else if (response.isRight()) {
@@ -328,9 +336,10 @@ class HomeController extends GetxController
     isLoading.value = false;
   }
 
-  getMyPoints(id) async {
+  getMyPoints() async {
+   
     isLoading.value = true;
-    final response = await _pointsProvider.getPoints(id);
+    final response = await _pointsProvider.getPoints();
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       points.clear();
@@ -352,9 +361,9 @@ class HomeController extends GetxController
     isLoading.value = false;
   }
 
-  getUsedPoints(id) async {
+  getUsedPoints() async {
     isLoading.value = true;
-    final response = await _pointsProvider.getUsedPoints(id);
+    final response = await _pointsProvider.getUsedPoints();
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       points.clear();
@@ -376,9 +385,9 @@ class HomeController extends GetxController
     isLoading.value = false;
   }
 
-  getExpiredPoints(id) async {
+  getExpiredPoints() async {
     isLoading.value = true;
-    final response = await _pointsProvider.getExpiredPoints(id);
+    final response = await _pointsProvider.getExpiredPoints();
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       points.clear();
@@ -457,7 +466,9 @@ class HomeController extends GetxController
               inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
             PersistentBottomNavBarItem(
-              icon: Icon( GetStorage().read('env') == 'driver' ? Icons.settings:Icons.person),
+              icon: Icon(GetStorage().read('env') == 'driver'
+                  ? Icons.settings
+                  : Icons.person),
               activeColorPrimary: AppColors.red,
               inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
@@ -481,6 +492,103 @@ class HomeController extends GetxController
           ];
   }
 
+  createMedium2() async {
+    isAddingToCart.value = true;
+    final response = await _cartProvider.createMedium2();
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      medium2Id.value = result!.id!;
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isAddingToCart.value = false;
+  }
+
+  addToMedium2(context, product) async {
+    isAddingToCart.value = true;
+    final response = await _cartProvider.addToMedium2(medium2Id.value, product);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      getCartMediumTwoItems();
+      addToCartSuccessDialog(context);
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isAddingToCart.value = false;
+  }
+
+  getCartMediumTwoItems() async {
+    isLoading.value = true;
+    final response = await _cartProvider.getMediumTwoItems(medium2Id.value);
+    if (response.isLeft()) {
+      cartItemsTotalPrice.value = 0.0;
+      final result = response.fold((l) => l, (r) => null);
+      cartMedium2Items.clear();
+      cartMedium2Items.addAll(result!);
+      cartMedium2Items.refresh();
+      cartMedium2Items.forEach((element) {
+        cartItemsTotalPrice.value =
+            cartItemsTotalPrice.value + (element.salePrice * element.quantity);
+      });
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+          title: 'error'.tr,
+          content: Text(
+            'please_try_again'.tr,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ));
+    }
+    isLoading.value = false;
+  }
+
+
+
+  addSubMediumTwo(bool isAdd, cartListID) async {
+    isLoading.value = true;
+    final response = await _cartProvider.changeQuantityMediumTwo(isAdd, cartListID);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      getCartMediumTwoItems();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+          title: 'error'.tr,
+          content: Text(
+            'please_try_again'.tr,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ));
+    }
+    isLoading.value = false;
+  }
+
+
   @override
   void onInit() {
     controller = PersistentTabController(initialIndex: 0);
@@ -488,7 +596,10 @@ class HomeController extends GetxController
       getSpecialProducts();
       getProductsByCategory(0);
       getOrders();
-      getMyPoints(GetStorage().read('id'));
+      getMyPoints();
+    } else if (GetStorage().read('env') == 'driver') {
+      getProductsByCategory(0);
+      createMedium2();
     }
 
     super.onInit();
@@ -719,4 +830,29 @@ class HomeController extends GetxController
     }
     isLoading.value = false;
   }
+
+
+  deleteProductFromMediumTwo(id) async {
+    isLoading.value = true;
+    final response = await _cartProvider.deleteProductFromMedium2(id);
+    if (response.isLeft()) {
+      getCartMediumTwoItems();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
+
+
 }

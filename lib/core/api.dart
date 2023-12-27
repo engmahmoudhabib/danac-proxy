@@ -29,10 +29,17 @@ class API {
   static final cartItemsURL = _baseURL + 'cart_items/';
   static final changeQuantityURL = _baseURL + 'change-quantity/';
   static final addOrderURL = _baseURL + 'create-order/';
-  static final getOrdersURL = _baseURL + 'orders/';
+  static final getOrdersURL = _baseURL + 'client-orders/';
   static final getOrderURL = _baseURL + 'order/';
-  static final pointsURL = _baseURL + 'points/';
+  static final pointsURL = _baseURL + 'total-points/';
   static final usedPointsURL = _baseURL + 'used-points/';
   static final expiredPointsURL = _baseURL + 'expired-points/';
   static final deleteItemFromCartURL = _baseURL + 'delete-item/';
+  static final addOrderMedium2URL = _baseURL + 'create-order-envoy/';
+  static final createMedium2URL = _baseURL + 'create-medium-two/';
+  static final addToMedium2URL = _baseURL + 'add-to-medium-two/';
+  static final medium2ListURL = _baseURL + 'list-medium-two-products/';
+  static final addSubMedium2URL = _baseURL + 'medium-two-handler/';
+  static final deleteFromMedium2URL =
+      _baseURL + 'delete-product-from-medium-two/';
 }

@@ -102,7 +102,7 @@ class Products {
   int? product;
   int? order;
   int? quantity;
-  int? totalPrice;
+  double? totalPrice;
 
   Products({this.product, this.order, this.quantity, this.totalPrice});
 
@@ -110,7 +110,7 @@ class Products {
     product = json['product'];
     order = json['order'];
     quantity = json['quantity'];
-    totalPrice = json['total_price'];
+    totalPrice = double.parse(json['total_price'].toString());
   }
 
   Map<String, dynamic> toJson() {

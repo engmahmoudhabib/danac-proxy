@@ -10,6 +10,7 @@ class SplashController extends GetxController {
 
   final SplashProvider _splashProvider = SplashProvider();
   refreshToken() async {
+    print(GetStorage().read('refresh'));
     isLoading.value = true;
     final response = await _splashProvider.refreshToken(
       RefreshTokenRequestModel(

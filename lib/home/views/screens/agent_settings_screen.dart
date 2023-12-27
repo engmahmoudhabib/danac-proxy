@@ -2,6 +2,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/home/views/screens/profile_screen.dart';
@@ -50,6 +51,7 @@ class AgentSettingsScreen extends StatelessWidget {
                   itemBuilder: (context, index) => ListTile(
                     onTap: () {
                       if (index == 2) {
+                        print( GetStorage().read('access'));
                         logout();
                       } else if (index == 1) {
                         PersistentNavBarNavigator.pushNewScreen(
