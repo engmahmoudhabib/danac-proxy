@@ -50,8 +50,8 @@ class HomeController extends GetxController
       .obs;
   TextEditingController? searchController = TextEditingController();
   TextEditingController? clientNameController = TextEditingController();
-   TextEditingController? clientPhoneController = TextEditingController();
-    TextEditingController? clientAddressController = TextEditingController();
+  TextEditingController? clientPhoneController = TextEditingController();
+  TextEditingController? clientAddressController = TextEditingController();
   RxList specialProducts = <SpecialProductsResponseModel>[].obs;
   RxList allProducts = <SearchlProductsResponseModel>[].obs;
   RxList searchProducts = <SearchlProductsResponseModel>[].obs;
@@ -109,7 +109,7 @@ class HomeController extends GetxController
       if (response.isLeft()) {
         final result = response.fold((l) => l, (r) => null);
         GetStorage().write('image', result?.image?.image);
-      Phoenix.rebirth(context);
+        Phoenix.rebirth(context);
       } else if (response.isRight()) {
         Get.defaultDialog(
           title: 'error'.tr,
@@ -215,15 +215,52 @@ class HomeController extends GetxController
     isAddingToCart.value = false;
   }
 
-  addOrder(context, date) async {
+  addOrder(context) async {
     isLoading.value = true;
 
-    final response = await _cartProvider.addOrder(cartId.value, date);
+    final response = await _cartProvider.addOrder(cartId.value, date.value);
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       Navigator.pop(Get.overlayContext!, true);
       getOrders();
       orderSuccessDialog(context);
+       date.value = DateTime.now()
+          .toString()
+          .substring(0, DateTime.now().toString().indexOf(' '));
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
+  addOrderToMediumTwo(
+    context,
+  ) async {
+    isLoading.value = true;
+
+    final response = await _cartProvider.addOrderToMediumTwo(
+        medium2Id.value,
+        date.value,
+        clientAddressController?.text,
+        clientPhoneController?.text,
+        clientNameController?.text);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      Navigator.pop(Get.overlayContext!, true);
+      orderSuccessDialog(context);
+      date.value = DateTime.now()
+          .toString()
+          .substring(0, DateTime.now().toString().indexOf(' '));
     } else if (response.isRight()) {
       Get.defaultDialog(
         title: 'error'.tr,
@@ -337,7 +374,6 @@ class HomeController extends GetxController
   }
 
   getMyPoints() async {
-   
     isLoading.value = true;
     final response = await _pointsProvider.getPoints();
     if (response.isLeft()) {
@@ -565,11 +601,10 @@ class HomeController extends GetxController
     isLoading.value = false;
   }
 
-
-
   addSubMediumTwo(bool isAdd, cartListID) async {
     isLoading.value = true;
-    final response = await _cartProvider.changeQuantityMediumTwo(isAdd, cartListID);
+    final response =
+        await _cartProvider.changeQuantityMediumTwo(isAdd, cartListID);
     if (response.isLeft()) {
       final result = response.fold((l) => l, (r) => null);
       getCartMediumTwoItems();
@@ -587,7 +622,6 @@ class HomeController extends GetxController
     }
     isLoading.value = false;
   }
-
 
   @override
   void onInit() {
@@ -831,7 +865,6 @@ class HomeController extends GetxController
     isLoading.value = false;
   }
 
-
   deleteProductFromMediumTwo(id) async {
     isLoading.value = true;
     final response = await _cartProvider.deleteProductFromMedium2(id);
@@ -852,7 +885,4 @@ class HomeController extends GetxController
     }
     isLoading.value = false;
   }
-
-
-
 }

@@ -7,11 +7,11 @@ class FirebasAPI {
     await _firebaseMessaging.requestPermission();
     final _fcmToken = await _firebaseMessaging.getToken();
     GetStorage().write('fcmToken', _fcmToken);
-    print('FCM: $_fcmToken');
+   
     FirebaseMessaging.onBackgroundMessage(handleFireBaseBackgroundMessage);
   }
 }
 
 Future<void> handleFireBaseBackgroundMessage(RemoteMessage message) async {
-  print(message.notification?.body);
+ 
 }

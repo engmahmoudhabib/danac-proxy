@@ -166,11 +166,8 @@ class AgentHomeScreen extends StatelessWidget {
                                               child: FadeInAnimation(
                                                 child: InkWell(
                                                   onTap: () {
-                                                    if (index == 0) {
-                                                  
-                                                    } if (index == 1) {
-                                                  
-                                                    }
+                                                    if (index == 0) {}
+                                                    if (index == 1) {}
                                                   },
                                                   child: Padding(
                                                     padding:
@@ -1014,26 +1011,75 @@ class AgentHomeScreen extends StatelessWidget {
                                                   children: [
                                                     SizedBox(
                                                       height: 200,
-                                                      child: Card(
-                                                        elevation: 5,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15.0),
-                                                        ),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15.0),
-                                                          child: Image.network(
-                                                            controller
+                                                      child: InkWell(
+                                                        onTap:(){
+                                                           PersistentNavBarNavigator
+                                                                  .pushNewScreen(
+                                                                context,
+                                                                screen:
+                                                                    ProductDetailsScreen(
+                                                                  productName:
+                                                                     controller
+                                                                .searchProducts[
+                                                                    index].name,
+                                                                  url:  controller
+                                                                .searchProducts[
+                                                                    index].image,
+                                                                  details:  controller
                                                                 .searchProducts[
                                                                     index]
-                                                                .image,
-                                                            fit: BoxFit.cover,
+                                                                      .description,
+                                                                  units: controller
+                                                                .searchProducts[
+                                                                    index]
+                                                                      .numPerItem
+                                                                      .toString(),
+                                                                  cartoon: controller
+                                                                .searchProducts[
+                                                                    index]
+                                                                      .itemPerCarton
+                                                                      .toString(),
+                                                                  category: controller
+                                                                .searchProducts[
+                                                                    index]
+                                                                      .category,
+                                                                  cartoonPrice:  controller
+                                                                .searchProducts[
+                                                                    index]
+                                                                      .salePrice
+                                                                      .toString(),
+                                                                  id:  controller
+                                                                .searchProducts[
+                                                                    index].id,
+                                                                ),
+                                                                withNavBar:
+                                                                    true,
+                                                                pageTransitionAnimation:
+                                                                    PageTransitionAnimation
+                                                                        .cupertino,
+                                                              );
+                                                        },
+                                                        child: Card(
+                                                          elevation: 5,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0),
+                                                          ),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0),
+                                                            child: Image.network(
+                                                              controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .image,
+                                                              fit: BoxFit.cover,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
@@ -1049,9 +1095,13 @@ class AgentHomeScreen extends StatelessWidget {
                                                               0.3,
                                                           height: 29,
                                                           child: ElevatedButton(
-                                                            onPressed: () {},
+                                                            onPressed: () {
+                                                             
+                                                            },
                                                             child: Text(
-                                                              'add_to_cart'.tr,
+                                                                controller
+                                                                .searchProducts[
+                                                                    index].name,
                                                               style: TextStyle(
                                                                 color: Colors
                                                                     .white,

@@ -135,8 +135,8 @@ YYDialog addOrder2Dialog(
                           )
                         : ElevatedButton(
                             onPressed: () {
-                              controller.addOrder(
-                                  context, controller.date.value);
+                              controller.addOrderToMediumTwo(
+                                  context,);
                             },
                             child: Text(
                               'confirm'.tr,

@@ -24,14 +24,11 @@ class SignUpProvider extends GetConnect {
       );
 
       if (response.status.isOk) {
-        
         return Left(SignUpResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
       return Right('An error occurred: $e');
     }
   }

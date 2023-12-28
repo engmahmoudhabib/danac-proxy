@@ -30,12 +30,14 @@ class LoginProvider extends GetConnect {
               'this account is not active') {
             return Right('this account is not accepted');
           }
-        } else
-          print(response.body);
+        } else{
+          
+        }
+         
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
+     
       return Right(e.toString());
     }
   }
@@ -54,7 +56,7 @@ class LoginProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(GetOTPResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+       
         return Right(response.body);
       }
     } catch (e) {
@@ -76,11 +78,11 @@ class LoginProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(GetOTPResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+      
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
+     
       return Right(e.toString());
     }
   }
@@ -96,7 +98,7 @@ class LoginProvider extends GetConnect {
       if (response.status.isOk) {
         return Left('password_changed_successfully'.tr);
       } else {
-        print(response.body);
+        
         return Right(response.body);
       }
     } catch (e) {

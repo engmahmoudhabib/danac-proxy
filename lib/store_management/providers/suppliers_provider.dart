@@ -32,7 +32,7 @@ class SuppliersProvider extends GetConnect {
       API.updateSupplier +'${id}/',
       );
       if (response.statusCode == 204) {
-        print(response.body);
+       
 
         return Left('supplier_deleted_successfully'.tr);
       } else {

@@ -51,7 +51,7 @@ class AgentSettingsScreen extends StatelessWidget {
                   itemBuilder: (context, index) => ListTile(
                     onTap: () {
                       if (index == 2) {
-                        print( GetStorage().read('access'));
+                       
                         logout();
                       } else if (index == 1) {
                         PersistentNavBarNavigator.pushNewScreen(

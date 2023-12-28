@@ -23,11 +23,11 @@ class ProductsProvider extends GetConnect {
                 l.map((model) => SpecialProductsResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
+     
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+     
       return Right('An error occurred: $e');
     }
   }
@@ -50,11 +50,11 @@ class ProductsProvider extends GetConnect {
                 l.map((model) => SearchlProductsResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
+       
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+    
       return Right('An error occurred: $e');
     }
   }
@@ -79,11 +79,11 @@ class ProductsProvider extends GetConnect {
                 l.map((model) => SearchlProductsResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
+        
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+      
       return Right('An error occurred: $e');
     }
   }

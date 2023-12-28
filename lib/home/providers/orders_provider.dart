@@ -8,7 +8,6 @@ import 'package:storeapp/home/models/orders_response_model.dart';
 class OrderProvider extends GetConnect {
   Future<Either<List<OrdersResponseModel>, String?>> getOrders() async {
     try {
-    
       final response = await get(
         API.getOrdersURL,
         headers: {
@@ -16,18 +15,14 @@ class OrderProvider extends GetConnect {
         },
       );
       if (response.status.isOk) {
-        
         Iterable l = response.body;
-
         List<OrdersResponseModel> res = List<OrdersResponseModel>.from(
             l.map((model) => OrdersResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
       return Right('An error occurred: $e');
     }
   }
@@ -36,17 +31,13 @@ class OrderProvider extends GetConnect {
     try {
       final response = await get(
         API.getOrderURL + '$id/',
-        
       );
       if (response.status.isOk) {
-        print(response.body);
         return Left(OrderResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }

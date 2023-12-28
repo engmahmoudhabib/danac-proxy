@@ -19,11 +19,11 @@ class SplashProvider extends GetConnect {
 
         return Left(RefreshTokenResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+       
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+    
       return Right('An error occurred: $e');
     }
   }

@@ -81,7 +81,9 @@ YYDialog addOrderDialog(
                       )
                     : ElevatedButton(
                         onPressed: () {
-                          controller.addOrder(context, controller.date.value);
+                          controller.addOrder(
+                            context,
+                          );
                         },
                         child: Text(
                           'confirm'.tr,
@@ -115,31 +117,30 @@ YYDialog addOrderDialog(
                 width: MediaQuery.of(context).size.width * 0.6,
                 height: 45,
                 child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(Get.overlayContext!, true);
-                        },
-                        child: Text(
-                          'cancel'.tr,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(AppColors.red),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                              side: BorderSide(
-                                color: AppColors.red,
-                              ),
-                            ),
-                          ),
+                  onPressed: () {
+                    Navigator.pop(Get.overlayContext!, true);
+                  },
+                  child: Text(
+                    'cancel'.tr,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(AppColors.red),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        side: BorderSide(
+                          color: AppColors.red,
                         ),
                       ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

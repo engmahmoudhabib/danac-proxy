@@ -18,7 +18,6 @@ class AgentProductsScreen extends StatelessWidget {
         elevation: 5,
         centerTitle: true,
         backgroundColor: Colors.white,
-     
         title: Text(
           'products'.tr,
           style: TextStyle(
@@ -34,7 +33,6 @@ class AgentProductsScreen extends StatelessWidget {
         child: Obx(
           () => DefaultTabController(
             length: 3,
-
             child: new Scaffold(
               appBar: new AppBar(
                 backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -111,35 +109,43 @@ class AgentProductsScreen extends StatelessWidget {
                                         child: FadeInAnimation(
                                           child: InkWell(
                                             onTap: () {
-                                                PersistentNavBarNavigator
-                                                                  .pushNewScreen(
-                                                                context,
-                                                                screen:
-                                                                    ProductDetailsScreen(
-                                                                  productName:
-                                                                      controller.allProducts[index].name.toString(),
-                                                                  url: controller.allProducts[index].image.toString(),
-                                                                  details: controller.allProducts[index]
-                                                                      .description.toString(),
-                                                                  units: controller.allProducts[index]
-                                                                      .numPerItem
-                                                                      .toString(),
-                                                                  cartoon: controller.allProducts[index]
-                                                                      .itemPerCarton
-                                                                      .toString(),
-                                                                  category: controller.allProducts[index]
-                                                                      .category,
-                                                                  cartoonPrice: controller.allProducts[index]
-                                                                      .salePrice
-                                                                      .toString(),
-                                                                  id: controller.allProducts[index].id,
-                                                                ),
-                                                                withNavBar:
-                                                                    true,
-                                                                pageTransitionAnimation:
-                                                                    PageTransitionAnimation
-                                                                        .cupertino,
-                                                              );
+                                              PersistentNavBarNavigator
+                                                  .pushNewScreen(
+                                                context,
+                                                screen: ProductDetailsScreen(
+                                                  productName: controller
+                                                      .allProducts[index].name
+                                                      .toString(),
+                                                  url: controller
+                                                      .allProducts[index].image
+                                                      .toString(),
+                                                  details: controller
+                                                      .allProducts[index]
+                                                      .description
+                                                      .toString(),
+                                                  units: controller
+                                                      .allProducts[index]
+                                                      .numPerItem
+                                                      .toString(),
+                                                  cartoon: controller
+                                                      .allProducts[index]
+                                                      .itemPerCarton
+                                                      .toString(),
+                                                  category: controller
+                                                      .allProducts[index]
+                                                      .category,
+                                                  cartoonPrice: controller
+                                                      .allProducts[index]
+                                                      .salePrice
+                                                      .toString(),
+                                                  id: controller
+                                                      .allProducts[index].id,
+                                                ),
+                                                withNavBar: true,
+                                                pageTransitionAnimation:
+                                                    PageTransitionAnimation
+                                                        .cupertino,
+                                              );
                                             },
                                             child: Card(
                                               elevation: 5,
@@ -160,7 +166,7 @@ class AgentProductsScreen extends StatelessWidget {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               15.0),
-                                                      child: Image.network( 
+                                                      child: Image.network(
                                                         controller
                                                             .allProducts[index]
                                                             .image,
@@ -182,7 +188,10 @@ class AgentProductsScreen extends StatelessWidget {
                                                       child: ElevatedButton(
                                                         onPressed: () {},
                                                         child: Text(
-                                                          controller.allProducts[index].name,
+                                                          controller
+                                                              .allProducts[
+                                                                  index]
+                                                              .name,
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 15,
@@ -254,35 +263,40 @@ class AgentProductsScreen extends StatelessWidget {
                                         child: FadeInAnimation(
                                           child: InkWell(
                                             onTap: () {
-                                                  PersistentNavBarNavigator
-                                                                  .pushNewScreen(
-                                                                context,
-                                                                screen:
-                                                                    ProductDetailsScreen(
-                                                                  productName:
-                                                                      controller.allProducts[index].name,
-                                                                  url: controller.allProducts[index].image,
-                                                                  details: controller.allProducts[index]
-                                                                      .description,
-                                                                  units: controller.allProducts[index]
-                                                                      .numPerItem
-                                                                      .toString(),
-                                                                  cartoon: controller.allProducts[index]
-                                                                      .itemPerCarton
-                                                                      .toString(),
-                                                                  category: controller.allProducts[index]
-                                                                      .category,
-                                                                  cartoonPrice: controller.allProducts[index]
-                                                                      .salePrice
-                                                                      .toString(),
-                                                                   id: controller.allProducts[index].id,
-                                                                ),
-                                                                withNavBar:
-                                                                    true,
-                                                                pageTransitionAnimation:
-                                                                    PageTransitionAnimation
-                                                                        .cupertino,
-                                                              );
+                                              PersistentNavBarNavigator
+                                                  .pushNewScreen(
+                                                context,
+                                                screen: ProductDetailsScreen(
+                                                  productName: controller
+                                                      .allProducts[index].name,
+                                                  url: controller
+                                                      .allProducts[index].image,
+                                                  details: controller
+                                                      .allProducts[index]
+                                                      .description,
+                                                  units: controller
+                                                      .allProducts[index]
+                                                      .numPerItem
+                                                      .toString(),
+                                                  cartoon: controller
+                                                      .allProducts[index]
+                                                      .itemPerCarton
+                                                      .toString(),
+                                                  category: controller
+                                                      .allProducts[index]
+                                                      .category,
+                                                  cartoonPrice: controller
+                                                      .allProducts[index]
+                                                      .salePrice
+                                                      .toString(),
+                                                  id: controller
+                                                      .allProducts[index].id,
+                                                ),
+                                                withNavBar: true,
+                                                pageTransitionAnimation:
+                                                    PageTransitionAnimation
+                                                        .cupertino,
+                                              );
                                             },
                                             child: Card(
                                               elevation: 5,
@@ -325,7 +339,10 @@ class AgentProductsScreen extends StatelessWidget {
                                                       child: ElevatedButton(
                                                         onPressed: () {},
                                                         child: Text(
-                                                          controller.allProducts[index].name,
+                                                          controller
+                                                              .allProducts[
+                                                                  index]
+                                                              .name,
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 15,
@@ -396,35 +413,43 @@ class AgentProductsScreen extends StatelessWidget {
                                       child: ScaleAnimation(
                                         child: FadeInAnimation(
                                           child: InkWell(
-                                            onTap: () {    PersistentNavBarNavigator
-                                                                  .pushNewScreen(
-                                                                context,
-                                                                screen:
-                                                                    ProductDetailsScreen(
-                                                                  productName:
-                                                                      controller.allProducts[index].name,
-                                                                  url: controller.allProducts[index].image,
-                                                                  details: controller.allProducts[index]
-                                                                      .description.toString(),
-                                                                  units: controller.allProducts[index]
-                                                                      .numPerItem
-                                                                      .toString(),
-                                                                  cartoon: controller.allProducts[index]
-                                                                      .itemPerCarton
-                                                                      .toString(),
-                                                                  category: controller.allProducts[index]
-                                                                      .category,
-                                                                  cartoonPrice: controller.allProducts[index]
-                                                                      .salePrice
-                                                                      .toString(),
-                                                                    id: controller.allProducts[index].id,
-                                                                ),
-                                                                withNavBar:
-                                                                    true,
-                                                                pageTransitionAnimation:
-                                                                    PageTransitionAnimation
-                                                                        .cupertino,
-                                                              );},
+                                            onTap: () {
+                                              PersistentNavBarNavigator
+                                                  .pushNewScreen(
+                                                context,
+                                                screen: ProductDetailsScreen(
+                                                  productName: controller
+                                                      .allProducts[index].name,
+                                                  url: controller
+                                                      .allProducts[index].image,
+                                                  details: controller
+                                                      .allProducts[index]
+                                                      .description
+                                                      .toString(),
+                                                  units: controller
+                                                      .allProducts[index]
+                                                      .numPerItem
+                                                      .toString(),
+                                                  cartoon: controller
+                                                      .allProducts[index]
+                                                      .itemPerCarton
+                                                      .toString(),
+                                                  category: controller
+                                                      .allProducts[index]
+                                                      .category,
+                                                  cartoonPrice: controller
+                                                      .allProducts[index]
+                                                      .salePrice
+                                                      .toString(),
+                                                  id: controller
+                                                      .allProducts[index].id,
+                                                ),
+                                                withNavBar: true,
+                                                pageTransitionAnimation:
+                                                    PageTransitionAnimation
+                                                        .cupertino,
+                                              );
+                                            },
                                             child: Card(
                                               elevation: 5,
                                               shape: RoundedRectangleBorder(
@@ -466,7 +491,10 @@ class AgentProductsScreen extends StatelessWidget {
                                                       child: ElevatedButton(
                                                         onPressed: () {},
                                                         child: Text(
-                                                         controller.allProducts[index].name,
+                                                          controller
+                                                              .allProducts[
+                                                                  index]
+                                                              .name,
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 15,

@@ -5,20 +5,23 @@ class CreateOrderMediumTwoResponseModel {
   int? productsNum;
   double? totalPrice;
   String? created;
+  String? address;
   String? deliveryDate;
   bool? delivered;
   List<int>? products;
 
-  CreateOrderMediumTwoResponseModel(
-      {this.id,
-      this.client,
-      this.phonenumber,
-      this.productsNum,
-      this.totalPrice,
-      this.created,
-      this.deliveryDate,
-      this.delivered,
-      this.products});
+  CreateOrderMediumTwoResponseModel({
+    this.id,
+    this.client,
+    this.phonenumber,
+    this.productsNum,
+    this.totalPrice,
+    this.created,
+    this.deliveryDate,
+    this.delivered,
+    this.products,
+    this.address,
+  });
 
   CreateOrderMediumTwoResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,6 +30,7 @@ class CreateOrderMediumTwoResponseModel {
     productsNum = json['products_num'];
     totalPrice = double.parse(json['total_price'].toString());
     created = json['created'];
+    address = json['address'];
     deliveryDate = json['delivery_date'];
     delivered = json['delivered'];
     products = json['products'].cast<int>();
@@ -43,6 +47,7 @@ class CreateOrderMediumTwoResponseModel {
     data['delivery_date'] = this.deliveryDate;
     data['delivered'] = this.delivered;
     data['products'] = this.products;
+    data['address'] = this.address;
     return data;
   }
 }

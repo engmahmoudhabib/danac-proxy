@@ -22,14 +22,11 @@ class CartProvider extends GetConnect {
       );
 
       if (response.status.isOk) {
-        print(response.body);
         return Left(CreateCartResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -39,14 +36,11 @@ class CartProvider extends GetConnect {
       final response = await post(API.createMedium2URL, {});
 
       if (response.status.isOk) {
-        print(response.body);
         return Left(CreateMediumTwoResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -57,14 +51,11 @@ class CartProvider extends GetConnect {
       final response =
           await post(API.addToMedium2URL + '$mediumID/$product/', {});
       if (response.status.isOk) {
-        print(response.body);
         return Left(AddToMediumTwoResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -79,14 +70,11 @@ class CartProvider extends GetConnect {
       );
 
       if (response.status.isOk) {
-        print(response.body);
         return Left('deleteed successfully');
       } else {
-        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -98,14 +86,11 @@ class CartProvider extends GetConnect {
       );
 
       if (response.status.isOk) {
-        print(response.body);
         return Left('deleteed successfully');
       } else {
-        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -124,13 +109,11 @@ class CartProvider extends GetConnect {
       );
 
       if (response.status.isOk) {
-        print(response.body);
         return Left(CreateCartResponseModel.fromJson(response.body));
       } else {
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }
@@ -148,11 +131,38 @@ class CartProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(AddOrderResponseModel.fromJson(response.body));
       } else {
+        return Right(response.body);
+      }
+    } catch (e) {
+      return Right(e.toString());
+    }
+  }
+
+  Future<Either<CreateOrderMediumTwoResponseModel, String?>>
+      addOrderToMediumTwo(mediumID, date, address, phonenumber, client) async {
+    try {
+      final response = await post(
+        API.addOrderMedium2URL + '$mediumID/',
+        {
+          'delivery_date': date,
+          'address': address,
+          'phonenumber': phonenumber,
+          'client': client,
+        },
+        headers: {
+          'Authorization': 'Bearer ' + GetStorage().read('access'),
+        },
+      );
+
+      if (response.status.isOk) {
+         print(response.body);
+        return Left(CreateOrderMediumTwoResponseModel.fromJson(response.body));
+      } else {
         print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
+       print(e.toString());
       return Right(e.toString());
     }
   }
@@ -173,14 +183,11 @@ class CartProvider extends GetConnect {
             List<GetCartItemsResponseModel>.from(
                 l.map((model) => GetCartItemsResponseModel.fromJson(model)));
 
-        print(response.body);
         return Left(res);
       } else {
-        print(response.body);
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
       return Right('An error occurred: $e');
     }
   }
@@ -195,14 +202,11 @@ class CartProvider extends GetConnect {
         List<MediumTwoResponseModel> res = List<MediumTwoResponseModel>.from(
             l.map((model) => MediumTwoResponseModel.fromJson(model)));
 
-        print(response.body);
         return Left(res);
       } else {
-        print(response.body);
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
       return Right('An error occurred: $e');
     }
   }
@@ -217,38 +221,11 @@ class CartProvider extends GetConnect {
           {});
 
       if (response.status.isOk) {
-        print(response.body);
         return Left(MediumTwoResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
         return Right(response.body);
       }
     } catch (e) {
-      print(e.toString());
-      return Right(e.toString());
-    }
-  }
-
-  Future<Either<CreateOrderMediumTwoResponseModel, String?>> addOrderMediumTwo(
-      mediumID, clientName, clientPhone, clientAddress, date) async {
-    try {
-      final response = await post(
-        API.addOrderMedium2URL + '$mediumID/',
-        {
-          'client': clientName,
-          'phonenumber': clientPhone,
-          'delivery_date': date,
-        },
-      );
-
-      if (response.status.isOk) {
-        return Left(CreateOrderMediumTwoResponseModel.fromJson(response.body));
-      } else {
-        print(response.body);
-        return Right(response.body);
-      }
-    } catch (e) {
-      print(e.toString());
       return Right(e.toString());
     }
   }

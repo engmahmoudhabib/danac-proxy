@@ -30,7 +30,7 @@ class MediumProvider extends GetConnect {
         API.getMediumTable + '$id/',
       );
       if (response.status.isOk) {
-        print(response.body);
+     
         Iterable l = response.body;
         List<MediumTableResponseModel> res =
             List<MediumTableResponseModel>.from(
@@ -50,17 +50,17 @@ class MediumProvider extends GetConnect {
         API.getIncomeListURL,
       );
       if (response.status.isOk) {
-        print(response.body);
+       
         Iterable l = response.body;
         List<ListIncomeResponseModel> res = List<ListIncomeResponseModel>.from(
             l.map((model) => ListIncomeResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
+      
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+   
       return Right('An error occurred: $e');
     }
   }
@@ -72,11 +72,11 @@ class MediumProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(AddToMediumResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+      
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+     
       return Right('An error occurred: $e');
     }
   }
@@ -87,11 +87,11 @@ class MediumProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(AddToMediumResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+        
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+    
       return Right('An error occurred: $e');
     }
   }
@@ -102,11 +102,11 @@ class MediumProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(AddToMediumResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+     
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+    
       return Right('An error occurred: $e');
     }
   }
@@ -123,14 +123,14 @@ class MediumProvider extends GetConnect {
         },
       );
       if (response.status.isOk) {
-        print(response.body);
+       
         return Left(CreateIncomeResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+   
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+    
       return Right('An error occurred: $e');
     }
   }

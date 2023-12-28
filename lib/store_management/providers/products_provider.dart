@@ -13,7 +13,7 @@ class ProductsProvider extends GetConnect {
         API.productsURL,
       );
       if (response.status.isOk) {
-        print(response.body);
+       
         Iterable l = response.body;
         List<ProductsResponseModel> res = List<ProductsResponseModel>.from(
             l.map((model) => ProductsResponseModel.fromJson(model)));
@@ -32,7 +32,7 @@ class ProductsProvider extends GetConnect {
         API.deleteProductsURL + '$id/',
       );
       if (response.statusCode == 204) {
-        print(response.body);
+      
 
         return Left('product_deleted_successfully'.tr);
       } else {
@@ -89,11 +89,11 @@ class ProductsProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(AddProductResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+      
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+     
       return Right('An error occurred: $e');
     }
   }
@@ -143,11 +143,11 @@ class ProductsProvider extends GetConnect {
       if (response.status.isOk) {
         return Left(AddProductResponseModel.fromJson(response.body));
       } else {
-        print(response.body);
+      
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+     
       return Right('An error occurred: $e');
     }
   }

@@ -20,11 +20,11 @@ class PointsProvider extends GetConnect {
             l.map((model) => PointsResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
+      
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+     
       return Right('An error occurred: $e');
     }
   }
@@ -44,11 +44,11 @@ class PointsProvider extends GetConnect {
             l.map((model) => PointsResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
+       
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+      
       return Right('An error occurred: $e');
     }
   }
@@ -68,11 +68,11 @@ class PointsProvider extends GetConnect {
             l.map((model) => PointsResponseModel.fromJson(model)));
         return Left(res);
       } else {
-        print(response.body);
+        
         return Right(response.statusText);
       }
     } catch (e) {
-      print(e.toString());
+   
       return Right('An error occurred: $e');
     }
   }
