@@ -31,6 +31,7 @@ class API {
   static final addOrderURL = _baseURL + 'create-order/';
   static final getOrdersURL = _baseURL + 'client-orders/';
   static final getOrderURL = _baseURL + 'order/';
+   static final getDriverOrderURL = _baseURL + 'get/';
   static final pointsURL = _baseURL + 'total-points/';
   static final usedPointsURL = _baseURL + 'used-points/';
   static final expiredPointsURL = _baseURL + 'expired-points/';
@@ -42,4 +43,6 @@ class API {
   static final addSubMedium2URL = _baseURL + 'medium-two-handler/';
   static final deleteFromMedium2URL =
       _baseURL + 'delete-product-from-medium-two/';
+  static final driverOrdersURL =
+      _baseURL + 'get-delivery-arrived-for-employee/';
 }

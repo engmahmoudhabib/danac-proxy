@@ -94,7 +94,7 @@ class MyOrdersScreen extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        SizedBox(
+                        SizedBox( 
                           height: MediaQuery.of(context).size.height * 0.695,
                           width: MediaQuery.of(context).size.width * 0.88,
                           child: AnimationLimiter(
@@ -243,7 +243,7 @@ class MyOrdersScreen extends StatelessWidget {
                     onRefresh: () => controller.getOrders(),
                   )
                 ],
-              )),
+              ),),
       ),
     );
   }

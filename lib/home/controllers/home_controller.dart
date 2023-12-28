@@ -17,6 +17,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/constants.dart';
 import 'package:storeapp/home/models/cart_item_response_model.dart';
+import 'package:storeapp/home/models/get_driver_order_model.dart';
+import 'package:storeapp/home/models/get_order_list_driver_response_model.dart';
 import 'package:storeapp/home/models/medium_two_response_model.dart';
 import 'package:storeapp/home/models/order_response_model.dart';
 import 'package:storeapp/home/models/orders_response_model.dart';
@@ -35,6 +37,7 @@ import 'package:storeapp/home/views/widgets/add_to_cart_successfuly_dialog.dart'
 import 'package:storeapp/home/views/widgets/order_success_dialog.dart';
 import 'package:storeapp/notifications/views/screens/notifications_screen.dart';
 import 'package:storeapp/settings/views/screens/settings_screen.dart';
+
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -58,6 +61,7 @@ class HomeController extends GetxController
   RxList cartItems = <GetCartItemsResponseModel>[].obs;
   RxList cartMedium2Items = <MediumTwoResponseModel>[].obs;
   RxList orders = <OrdersResponseModel>[].obs;
+  RxList driverOrders = <GetDriverOrdersListResponseModel>[].obs;
   RxList points = <PointsResponseModel>[].obs;
   final ProductsProvider _productsProvider = ProductsProvider();
   final CartProvider _cartProvider = CartProvider();
@@ -65,6 +69,7 @@ class HomeController extends GetxController
   final PointsProvider _pointsProvider = PointsProvider();
   final ProfileProvider _profileProvider = ProfileProvider();
   RxList order = <OrderResponseModel>[].obs;
+  RxList driverOrder = <GetDriverOrderResponseModel>[].obs;
   late Completer<GoogleMapController> googleMapsController = Completer();
   var destination = "".obs;
   var distanceLeft = "".obs;
@@ -224,7 +229,7 @@ class HomeController extends GetxController
       Navigator.pop(Get.overlayContext!, true);
       getOrders();
       orderSuccessDialog(context);
-       date.value = DateTime.now()
+      date.value = DateTime.now()
           .toString()
           .substring(0, DateTime.now().toString().indexOf(' '));
     } else if (response.isRight()) {
@@ -373,6 +378,33 @@ class HomeController extends GetxController
     isLoading.value = false;
   }
 
+  getDriverOrder(id) async {
+    isLoading.value = true;
+    final response = await _orderProvider.getDriverOrder(id);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+
+      driverOrder.clear();
+      driverOrder.add(result!);
+      driverOrder.refresh();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
+
+
   getMyPoints() async {
     isLoading.value = true;
     final response = await _pointsProvider.getPoints();
@@ -466,9 +498,32 @@ class HomeController extends GetxController
     }
   }
 
+  getDriverOrders(oldOrNew) async {
+    isLoading.value = true;
+    final response = await _pointsProvider.getDriverOrders(oldOrNew);
+    if (response.isLeft()) {
+      final result = response.fold((l) => l, (r) => null);
+      driverOrders.clear();
+      driverOrders.addAll(result!);
+      driverOrders.refresh();
+    } else if (response.isRight()) {
+      Get.defaultDialog(
+        title: 'error'.tr,
+        content: Text(
+          'please_try_again'.tr,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
+    isLoading.value = false;
+  }
+
   List<Widget> buildScreens() {
-    return GetStorage().read('env') == 'agent' ||
-            GetStorage().read('env') == 'driver'
+    return GetStorage().read('env') == 'agent'
         ? [
             AgentHomeScreen(),
             AgentProductsScreen(),
@@ -476,15 +531,16 @@ class HomeController extends GetxController
             SettingsScreen(),
           ]
         : [
-            HomeScreen(),
+            GetStorage().read('env') == 'driver'
+                ? AgentHomeScreen()
+                : HomeScreen(),
             NotificationsScreen(),
             SettingsScreen(),
           ];
   }
 
   List<PersistentBottomNavBarItem> navBarsItems() {
-    return GetStorage().read('env') == 'agent' ||
-            GetStorage().read('env') == 'driver'
+    return GetStorage().read('env') == 'agent'
         ? [
             PersistentBottomNavBarItem(
               icon: Icon(Icons.home),
@@ -632,8 +688,10 @@ class HomeController extends GetxController
       getOrders();
       getMyPoints();
     } else if (GetStorage().read('env') == 'driver') {
+      getDriverOrders("True");
       getProductsByCategory(0);
       createMedium2();
+   
     }
 
     super.onInit();

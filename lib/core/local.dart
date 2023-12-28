@@ -216,7 +216,11 @@ class MyLocale implements Translations {
           "The changed image Profile has been successfully.":
               'تم تغيير الصورة الشخصية بنجاح',
           'client_phone': 'رقم هاتف العميل',
-          'client_address': 'عنوان العميل'
+          'client_address': 'عنوان العميل',
+          'new_orders': 'الطلبات الجديدة',
+          'old_orders': 'الطلبات السابقة',
+          'client_data' :'بيانات العميل' , 
+          'order_address' :'عنوان التوصيل'
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -438,9 +442,11 @@ class MyLocale implements Translations {
               "Veuillez attendre que votre compte soit approuvé pour pouvoir utiliser l'application",
           'success': 'opération accomplie avec succès',
           "The changed image Profile has been successfully.":
-              ' Votre photo de profil a été modifiée avec succès' , 
-               'client_phone': 'Numéro de téléphone du client' , 
-                'client_address':'Adresse du client'
+              ' Votre photo de profil a été modifiée avec succès',
+          'client_phone': 'Numéro de téléphone du client',
+          'client_address': 'Adresse du client','new_orders': 'Nouvelles commandes',   'old_orders':'Commandes précédentes' , 
+           'client_data' : 'Données client' , 
+            'order_address' : 'Adresse de livraison'
         }
       };
 }

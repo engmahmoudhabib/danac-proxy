@@ -13,14 +13,17 @@ class ParentScreen extends StatelessWidget {
       controller: controller.controller,
       screens: controller.buildScreens(),
       onItemSelected: (value) {
-        if (value == 0) {
+        if (value == 1) {
+          controller.getProductsByCategory(0);
+        }
+       /*  if (value == 0) {
           controller.getSpecialProducts();
         } else if (value == 1) {
           controller.getProductsByCategory(0);
         } else if (value == 3) {
           controller.getOrders();
           controller.getMyPoints();
-        }
+        } */
       },
       items: controller.navBarsItems(),
       confineInSafeArea: true,

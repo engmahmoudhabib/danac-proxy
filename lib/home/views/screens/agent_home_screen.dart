@@ -15,6 +15,7 @@ import 'package:storeapp/home/views/screens/product_details_screen.dart';
 import 'package:storeapp/home/views/screens/special_elements_screen.dart';
 import 'package:storeapp/login/views/widgets/custom_textField.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:storeapp/store_management/views/widgets/input_row_item.dart';
 
 class AgentHomeScreen extends StatelessWidget {
   AgentHomeScreen({super.key});
@@ -146,84 +147,488 @@ class AgentHomeScreen extends StatelessWidget {
                             ? [
                                 SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.68,
+                                      MediaQuery.of(context).size.height * 0.63,
                                   width:
                                       MediaQuery.of(context).size.width * 0.95,
-                                  child: AnimationLimiter(
-                                    child: GridView.count(
-                                      crossAxisCount: 1,
-                                      childAspectRatio: 7 / 4,
-                                      children: List.generate(
-                                        2,
-                                        (int index) {
-                                          return AnimationConfiguration
-                                              .staggeredGrid(
-                                            position: index,
-                                            duration: const Duration(
-                                                milliseconds: 375),
-                                            columnCount: 2,
-                                            child: ScaleAnimation(
-                                              child: FadeInAnimation(
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    if (index == 0) {}
-                                                    if (index == 1) {}
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            18.0),
-                                                    child: Card(
-                                                      elevation: 5,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15.0),
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          index == 0
-                                                              ? Image.asset(
-                                                                  AppImages
-                                                                      .Truck)
-                                                              : Image.asset(
-                                                                  AppImages
-                                                                      .profile),
-                                                          SizedBox(
-                                                            height: 20,
-                                                          ),
-                                                          Text(
-                                                            index == 0
-                                                                ? 'proxy_n'.tr
-                                                                : 'conducteur'
-                                                                    .tr,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              fontSize: 17,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          ),
-                                                        ],
+                                  child: DefaultTabController(
+                                    length: 2,
+                                    child: Scaffold(
+                                      appBar: AppBar(
+                                        backgroundColor: Colors.white,
+                                        elevation: 0,
+                                        flexibleSpace: SizedBox(
+                                          height: 50,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              TabBar(
+                                                indicatorColor: Colors.black,
+                                                onTap: (value) {
+                                                  if (value == 0) {
+                                                    controller.getDriverOrders(
+                                                        "True");
+                                                  } else if (value == 1) {
+                                                    controller.getDriverOrders(
+                                                        "False");
+                                                  }
+                                                },
+                                                indicatorPadding:
+                                                    EdgeInsets.only(
+                                                  left: 20,
+                                                  right: 20,
+                                                ),
+                                                tabs: [
+                                                  Tab(
+                                                    icon: Text(
+                                                      'new_orders'.tr,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                       ),
                                                     ),
                                                   ),
-                                                ),
+                                                  Tab(
+                                                    icon: Text(
+                                                      'old_orders'.tr,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                          );
-                                        },
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      body: TabBarView(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        children: [
+                                          controller.isLoading.value == true
+                                              ? Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: AppColors.red,
+                                                  ),
+                                                )
+                                              : Column(
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      child: Container(
+                                                        height: 42,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                        color: AppColors.pink,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: [
+                                                            SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.4,
+                                                              child: RichText(
+                                                                text: TextSpan(
+                                                                  children: [
+                                                                    TextSpan(
+                                                                      text: 'orders_num'
+                                                                          .tr,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: AppColors
+                                                                            .brown,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
+                                                                    ),
+                                                                    TextSpan(
+                                                                      text:
+                                                                          " (${controller.driverOrders.length})",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.42,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.88,
+                                                      child: AnimationLimiter(
+                                                        child: GridView.count(
+                                                          crossAxisCount: 1,
+                                                          shrinkWrap: true,
+                                                          childAspectRatio:
+                                                              7 / 5,
+                                                          children:
+                                                              List.generate(
+                                                            controller
+                                                                .driverOrders
+                                                                .length,
+                                                            (int index) {
+                                                              return AnimationConfiguration
+                                                                  .staggeredGrid(
+                                                                position: index,
+                                                                duration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            375),
+                                                                columnCount: 1,
+                                                                child:
+                                                                    ScaleAnimation(
+                                                                  child:
+                                                                      FadeInAnimation(
+                                                                    child:
+                                                                        InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        controller.getOrder(controller
+                                                                            .driverOrders[index]
+                                                                            .id);
+                                                                        /*    PersistentNavBarNavigator
+                                                  .pushNewScreen(
+                                                context,
+                                                screen: OrderScreen(
+                                                  orderNum: controller
+                                                      .orders[index].id,
+                                                ),
+                                                withNavBar: true,
+                                                pageTransitionAnimation:
+                                                    PageTransitionAnimation
+                                                        .cupertino,
+                                              ); */
+                                                                      },
+                                                                      child:
+                                                                          Card(
+                                                                        elevation:
+                                                                            5,
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(15.0),
+                                                                        ),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.all(11.0),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                                children: [
+                                                                                  SizedBox(
+                                                                                    width: MediaQuery.of(context).size.width * 0.4,
+                                                                                    child: RichText(
+                                                                                      text: TextSpan(
+                                                                                        children: [],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    width: MediaQuery.of(context).size.width * 0.4,
+                                                                                    child: RichText(
+                                                                                      textAlign: TextAlign.end,
+                                                                                      text: TextSpan(
+                                                                                        children: [
+                                                                                          TextSpan(
+                                                                                            text: controller.driverOrders[index].outputReceipt.date,
+                                                                                            style: TextStyle(
+                                                                                              color: Colors.black,
+                                                                                              fontSize: 16,
+                                                                                              fontWeight: FontWeight.w400,
+                                                                                            ),
+                                                                                          ),
+                                                                                          WidgetSpan(
+                                                                                            child: Icon(
+                                                                                              Icons.calendar_month,
+                                                                                              color: Colors.black,
+                                                                                              size: 18,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            Divider(
+                                                                              color: Colors.black,
+                                                                              indent: 10,
+                                                                              endIndent: 10,
+                                                                            ),
+                                                                            inputRowItem(
+                                                                              text: "order_number".tr,
+                                                                              total: controller.driverOrders[index].id.toString(),
+                                                                            ),
+                                                                            inputRowItem(
+                                                                              text: "products_num".tr,
+                                                                              total: controller.driverOrders[index].outputReceipt.products.length.toString(),
+                                                                            ),
+                                                                            inputRowItem(
+                                                                              text: "tota".tr,
+                                                                              total: controller.driverOrders[index].outputReceipt.remainingAmount.toString(),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                          controller.isLoading.value == true
+                                              ? Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: AppColors.red,
+                                                  ),
+                                                )
+                                              : Column(
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      child: Container(
+                                                        height: 42,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                        color: AppColors.pink,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: [
+                                                            SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.4,
+                                                              child: RichText(
+                                                                text: TextSpan(
+                                                                  children: [
+                                                                    TextSpan(
+                                                                      text: 'orders_num'
+                                                                          .tr,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: AppColors
+                                                                            .brown,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
+                                                                    ),
+                                                                    TextSpan(
+                                                                      text:
+                                                                          " (${controller.driverOrders.length})",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.42,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.88,
+                                                      child: AnimationLimiter(
+                                                        child: GridView.count(
+                                                          crossAxisCount: 1,
+                                                          shrinkWrap: true,
+                                                          childAspectRatio:
+                                                              7 / 5,
+                                                          children:
+                                                              List.generate(
+                                                            controller
+                                                                .driverOrders
+                                                                .length,
+                                                            (int index) {
+                                                              return AnimationConfiguration
+                                                                  .staggeredGrid(
+                                                                position: index,
+                                                                duration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            375),
+                                                                columnCount: 1,
+                                                                child:
+                                                                    ScaleAnimation(
+                                                                  child:
+                                                                      FadeInAnimation(
+                                                                    child:
+                                                                        InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        controller.getDriverOrder(controller
+                                                                            .driverOrders[index]
+                                                                            .id);
+                                                                        PersistentNavBarNavigator
+                                                                            .pushNewScreen(
+                                                                          context,
+                                                                          screen:
+                                                                              OrderScreen(
+                                                                            orderNum:
+                                                                                controller.driverOrders[index].id,
+                                                                          ),
+                                                                          withNavBar:
+                                                                              true,
+                                                                          pageTransitionAnimation:
+                                                                              PageTransitionAnimation.cupertino,
+                                                                        );
+                                                                      },
+                                                                      child:
+                                                                          Card(
+                                                                        elevation:
+                                                                            5,
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(15.0),
+                                                                        ),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.all(11.0),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                                children: [
+                                                                                  SizedBox(
+                                                                                    width: MediaQuery.of(context).size.width * 0.4,
+                                                                                    child: RichText(
+                                                                                      text: TextSpan(
+                                                                                        children: [],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    width: MediaQuery.of(context).size.width * 0.4,
+                                                                                    child: RichText(
+                                                                                      textAlign: TextAlign.end,
+                                                                                      text: TextSpan(
+                                                                                        children: [
+                                                                                          TextSpan(
+                                                                                            text: controller.driverOrders[index].outputReceipt.date,
+                                                                                            style: TextStyle(
+                                                                                              color: Colors.black,
+                                                                                              fontSize: 16,
+                                                                                              fontWeight: FontWeight.w400,
+                                                                                            ),
+                                                                                          ),
+                                                                                          WidgetSpan(
+                                                                                            child: Icon(
+                                                                                              Icons.calendar_month,
+                                                                                              color: Colors.black,
+                                                                                              size: 18,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            Divider(
+                                                                              color: Colors.black,
+                                                                              indent: 10,
+                                                                              endIndent: 10,
+                                                                            ),
+                                                                            inputRowItem(
+                                                                              text: "order_number".tr,
+                                                                              total: controller.driverOrders[index].id.toString(),
+                                                                            ),
+                                                                            inputRowItem(
+                                                                              text: "products_num".tr,
+                                                                              total: controller.driverOrders[index].outputReceipt.products.length.toString(),
+                                                                            ),
+                                                                            inputRowItem(
+                                                                              text: "tota".tr,
+                                                                              total: controller.driverOrders[index].outputReceipt.remainingAmount.toString(),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -1012,52 +1417,54 @@ class AgentHomeScreen extends StatelessWidget {
                                                     SizedBox(
                                                       height: 200,
                                                       child: InkWell(
-                                                        onTap:(){
-                                                           PersistentNavBarNavigator
-                                                                  .pushNewScreen(
-                                                                context,
-                                                                screen:
-                                                                    ProductDetailsScreen(
-                                                                  productName:
-                                                                     controller
-                                                                .searchProducts[
-                                                                    index].name,
-                                                                  url:  controller
-                                                                .searchProducts[
-                                                                    index].image,
-                                                                  details:  controller
-                                                                .searchProducts[
-                                                                    index]
-                                                                      .description,
-                                                                  units: controller
-                                                                .searchProducts[
-                                                                    index]
-                                                                      .numPerItem
-                                                                      .toString(),
-                                                                  cartoon: controller
-                                                                .searchProducts[
-                                                                    index]
-                                                                      .itemPerCarton
-                                                                      .toString(),
-                                                                  category: controller
-                                                                .searchProducts[
-                                                                    index]
-                                                                      .category,
-                                                                  cartoonPrice:  controller
-                                                                .searchProducts[
-                                                                    index]
-                                                                      .salePrice
-                                                                      .toString(),
-                                                                  id:  controller
-                                                                .searchProducts[
-                                                                    index].id,
-                                                                ),
-                                                                withNavBar:
-                                                                    true,
-                                                                pageTransitionAnimation:
-                                                                    PageTransitionAnimation
-                                                                        .cupertino,
-                                                              );
+                                                        onTap: () {
+                                                          PersistentNavBarNavigator
+                                                              .pushNewScreen(
+                                                            context,
+                                                            screen:
+                                                                ProductDetailsScreen(
+                                                              productName:
+                                                                  controller
+                                                                      .searchProducts[
+                                                                          index]
+                                                                      .name,
+                                                              url: controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .image,
+                                                              details: controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .description,
+                                                              units: controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .numPerItem
+                                                                  .toString(),
+                                                              cartoon: controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .itemPerCarton
+                                                                  .toString(),
+                                                              category: controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .category,
+                                                              cartoonPrice: controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .salePrice
+                                                                  .toString(),
+                                                              id: controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .id,
+                                                            ),
+                                                            withNavBar: true,
+                                                            pageTransitionAnimation:
+                                                                PageTransitionAnimation
+                                                                    .cupertino,
+                                                          );
                                                         },
                                                         child: Card(
                                                           elevation: 5,
@@ -1073,7 +1480,8 @@ class AgentHomeScreen extends StatelessWidget {
                                                                 BorderRadius
                                                                     .circular(
                                                                         15.0),
-                                                            child: Image.network(
+                                                            child:
+                                                                Image.network(
                                                               controller
                                                                   .searchProducts[
                                                                       index]
@@ -1095,13 +1503,12 @@ class AgentHomeScreen extends StatelessWidget {
                                                               0.3,
                                                           height: 29,
                                                           child: ElevatedButton(
-                                                            onPressed: () {
-                                                             
-                                                            },
+                                                            onPressed: () {},
                                                             child: Text(
-                                                                controller
-                                                                .searchProducts[
-                                                                    index].name,
+                                                              controller
+                                                                  .searchProducts[
+                                                                      index]
+                                                                  .name,
                                                               style: TextStyle(
                                                                 color: Colors
                                                                     .white,

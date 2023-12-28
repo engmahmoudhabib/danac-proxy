@@ -18,7 +18,7 @@ Future<void> main() async {
   );
   await FirebasAPI().initNotifications();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  GetStorage().write('env', 'agent');
+  GetStorage().write('env', 'driver');
   
   runApp(Phoenix(child: const StoreApp()));
 }
