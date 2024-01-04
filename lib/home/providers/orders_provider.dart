@@ -32,6 +32,9 @@ class OrderProvider extends GetConnect {
     try {
       final response = await get(
         API.getOrderURL + '$id/',
+        headers: {
+          'Authorization': 'Bearer ' + GetStorage().read('access'),
+        },
       );
       if (response.status.isOk) {
         return Left(OrderResponseModel.fromJson(response.body));
@@ -53,7 +56,6 @@ class OrderProvider extends GetConnect {
         },
       );
       if (response.status.isOk) {
-      
         return Left(GetDriverOrderResponseModel.fromJson(response.body));
       } else {
         return Right(response.body);

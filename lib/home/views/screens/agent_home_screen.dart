@@ -319,21 +319,22 @@ class AgentHomeScreen extends StatelessWidget {
                                                                         InkWell(
                                                                       onTap:
                                                                           () {
-                                                                        controller.getOrder(controller
+                                                                    controller.getDriverOrder(controller
                                                                             .driverOrders[index]
                                                                             .id);
-                                                                        /*    PersistentNavBarNavigator
-                                                  .pushNewScreen(
-                                                context,
-                                                screen: OrderScreen(
-                                                  orderNum: controller
-                                                      .orders[index].id,
-                                                ),
-                                                withNavBar: true,
-                                                pageTransitionAnimation:
-                                                    PageTransitionAnimation
-                                                        .cupertino,
-                                              ); */
+                                                                        PersistentNavBarNavigator
+                                                                            .pushNewScreen(
+                                                                          context,
+                                                                          screen:
+                                                                              OrderScreen(
+                                                                            orderNum:
+                                                                                controller.driverOrders[index].id,
+                                                                          ),
+                                                                          withNavBar:
+                                                                              true,
+                                                                          pageTransitionAnimation:
+                                                                              PageTransitionAnimation.cupertino,
+                                                                        );
                                                                       },
                                                                       child:
                                                                           Card(

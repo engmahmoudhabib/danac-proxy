@@ -9,6 +9,7 @@ class FirebasAPI {
     GetStorage().write('fcmToken', _fcmToken);
    
     FirebaseMessaging.onBackgroundMessage(handleFireBaseBackgroundMessage);
+    
   }
 }
 

@@ -18,7 +18,7 @@ class ProfileProvider extends GetConnect {
     });
     try {
       final response = await put(
-        API.updateProfile + id+'/',
+        API.updateProfile + id.toString()+'/',
         form,
         headers: headers,
       );

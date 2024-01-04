@@ -17,15 +17,15 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   get: ^4.6.6
-  flutter_native_splash: ^2.3.5
+  #flutter_native_splash: ^2.3.5
   animate_do: ^3.1.2
   persistent_bottom_nav_bar: ^5.0.2
   flutter_staggered_animations: ^1.1.1
   get_storage: ^2.1.1
-  http: ^0.13.6
+  #http: ^0.13.6
   image_picker: ^1.0.5
   dartz: ^0.10.1
-  flutter_launcher_icons: ^0.13.1
+  #flutter_launcher_icons: ^0.13.1
   flutter_phoenix: ^1.1.1
   flutter_barcode_scanner: ^2.0.0
   dropdown_search: ^5.0.6
@@ -49,8 +49,20 @@ dependencies:
   dio: ^5.4.0
   google_maps_utils: ^2.0.0+1
   flutter_html: ^3.0.0-beta.2
-  flutter_local_notifications: ^16.2.0
-  workmanager: ^0.5.1
+  mapbox_gl: ^0.16.0
+
+ 
+
+
+ 
+
+
+
+
+
+ 
+ 
+
  
 
  
@@ -85,6 +97,7 @@ flutter:
   uses-material-design: true
   assets:
    - assets/images/
+
   fonts:
      - family: Tajawal
        fonts:

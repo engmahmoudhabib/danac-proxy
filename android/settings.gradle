@@ -1,3 +1,5 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
 pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()
@@ -14,10 +16,12 @@ pluginManagement {
     plugins {
         id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
     }
-         
-      
+
+
 
 }
+
+
 
 include ":app"
 

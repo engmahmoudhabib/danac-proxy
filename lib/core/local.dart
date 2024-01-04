@@ -126,6 +126,7 @@ class MyLocale implements Translations {
           'client_added_successfully': 'تم إضافة العميل بنجاح',
           'client_edited_successfully': 'تم تعديل العميل بنجاح',
           'done': 'تم',
+          'profile_updated':'تم تحديث الملف الشخصي بنجاح',
           'rem_amt': 'المبلغ المتبقي',
           'invoice_save_with_num': 'تم حفظ وصل التسليم رقم',
           'invoive_details': 'تفاصيل الوصل',
@@ -153,6 +154,7 @@ class MyLocale implements Translations {
           'settings2': 'اللغة, الإشعارات , الملف الشخصي',
           'my_orders': 'طلباتي',
           'points': 'نقطة',
+          'notifications':'الإشعارات',
           'points_expired': 'ستنتهي صلاحية النقاط في ',
           'orders_num': 'عدد الطلبات',
           'order_number': 'رقم الطلب',
@@ -220,7 +222,8 @@ class MyLocale implements Translations {
           'new_orders': 'الطلبات الجديدة',
           'old_orders': 'الطلبات السابقة',
           'client_data' :'بيانات العميل' , 
-          'order_address' :'عنوان التوصيل'
+          'order_address' :'عنوان التوصيل' , 
+          'city':'العنوان'
         },
         "fr_FR": {
           "login": 'Se Connecter',
@@ -446,7 +449,10 @@ class MyLocale implements Translations {
           'client_phone': 'Numéro de téléphone du client',
           'client_address': 'Adresse du client','new_orders': 'Nouvelles commandes',   'old_orders':'Commandes précédentes' , 
            'client_data' : 'Données client' , 
-            'order_address' : 'Adresse de livraison'
+            'order_address' : 'Adresse de livraison' , 
+            'notifications' :'Notifications' , 
+             'profile_updated': 'Le profil a été mis à jour avec succès' , 
+              'city': "l'adresse"
         }
       };
 }

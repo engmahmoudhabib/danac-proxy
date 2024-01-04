@@ -6,10 +6,10 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_..." />
     <application android:label="DANAC CLIENT" android:name="${applicationName}" android:icon="@mipmap/launcher_icon">
-
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCFLz4IbxueyV7qpi6R59FmIuPgmL9F0OM"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB4JeEkYQNF4hAVw12v2g0ub83oIO7hrEM"/>
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
             <intent-filter>

@@ -1,6 +1,6 @@
 class GetDriverOrderResponseModel {
   Receipt? receipt;
-  List<int>? products;
+  List<Products>? products;
   bool? isDelivered;
 
   GetDriverOrderResponseModel({this.receipt, this.products, this.isDelivered});
@@ -8,7 +8,12 @@ class GetDriverOrderResponseModel {
   GetDriverOrderResponseModel.fromJson(Map<String, dynamic> json) {
     receipt =
         json['receipt'] != null ? new Receipt.fromJson(json['receipt']) : null;
-    products = json['products'].cast<int>();
+    if (json['products'] != null) {
+      products = <Products>[];
+      json['products'].forEach((v) {
+        products!.add(new Products.fromJson(v));
+      });
+    }
     isDelivered = json['is_delivered'];
   }
 
@@ -17,7 +22,9 @@ class GetDriverOrderResponseModel {
     if (this.receipt != null) {
       data['receipt'] = this.receipt!.toJson();
     }
-    data['products'] = this.products;
+    if (this.products != null) {
+      data['products'] = this.products!.map((v) => v.toJson()).toList();
+    }
     data['is_delivered'] = this.isDelivered;
     return data;
   }
@@ -25,6 +32,11 @@ class GetDriverOrderResponseModel {
 
 class Receipt {
   int? id;
+  int? client;
+  String? clientName;
+  String? address;
+  List<int>? products;
+  int? employee;
   int? verifyCode;
   String? phonenumber;
   double? recivePyement;
@@ -36,12 +48,14 @@ class Receipt {
   String? barcode;
   String? location;
   bool? delivered;
-  int? client;
-  int? employee;
-  List<int>? products;
 
   Receipt(
       {this.id,
+      this.client,
+      this.clientName,
+      this.address,
+      this.products,
+      this.employee,
       this.verifyCode,
       this.phonenumber,
       this.recivePyement,
@@ -52,13 +66,15 @@ class Receipt {
       this.date,
       this.barcode,
       this.location,
-      this.delivered,
-      this.client,
-      this.employee,
-      this.products});
+      this.delivered});
 
   Receipt.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    client = json['client'];
+    clientName = json['client_name'];
+    address = json['address'];
+    products = json['products'].cast<int>();
+    employee = json['employee'];
     verifyCode = json['verify_code'];
     phonenumber = json['phonenumber'];
     recivePyement = double.parse(json['recive_pyement'].toString());
@@ -70,14 +86,16 @@ class Receipt {
     barcode = json['barcode'];
     location = json['location'];
     delivered = json['delivered'];
-    client = json['client'];
-    employee = json['employee'];
-    products = json['products'].cast<int>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['client'] = this.client;
+    data['client_name'] = this.clientName;
+    data['address'] = this.address;
+    data['products'] = this.products;
+    data['employee'] = this.employee;
     data['verify_code'] = this.verifyCode;
     data['phonenumber'] = this.phonenumber;
     data['recive_pyement'] = this.recivePyement;
@@ -89,9 +107,52 @@ class Receipt {
     data['barcode'] = this.barcode;
     data['location'] = this.location;
     data['delivered'] = this.delivered;
-    data['client'] = this.client;
-    data['employee'] = this.employee;
+    return data;
+  }
+}
+
+class Products {
+  int? products;
+  int? quantity;
+  double? total;
+  double? discount;
+  int? numPerItem;
+  double? salePrice;
+  String? product;
+  String? image;
+
+  Products({
+    this.products,
+    this.quantity,
+    this.total,
+    this.discount,
+    this.numPerItem,
+    this.salePrice,
+    this.product,
+    this.image,
+  });
+
+  Products.fromJson(Map<String, dynamic> json) {
+    products = json['products'];
+    quantity = json['quantity'];
+    total = double.parse(json['total'].toString());
+    discount = double.parse(json['discount'].toString());
+    numPerItem = json['num_per_item '];
+    salePrice = double.parse(json['sale_price'].toString());
+    product = json['product'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['products'] = this.products;
+    data['quantity'] = this.quantity;
+    data['total'] = this.total;
+    data['discount'] = this.discount;
+    data['num_per_item '] = this.numPerItem;
+    data['sale_price'] = this.salePrice;
+    data['product'] = this.product;
+    data['image'] = this.image;
     return data;
   }
 }
