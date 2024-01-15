@@ -6,7 +6,7 @@ import 'package:flutter_mapbox_navigation/flutter_mapbox_navigation.dart';
 import 'package:storeapp/core/colors.dart';
 import 'package:storeapp/core/images.dart';
 
-class NavigationScreen extends StatelessWidget {
+class NavigationScreen extends StatefulWidget {
   double lat;
   double long;
   double sourceLat;
@@ -19,50 +19,106 @@ class NavigationScreen extends StatelessWidget {
     required this.sourceLng,
   });
 
+  @override
+  State<NavigationScreen> createState() => _NavigationScreenState();
+}
+
+class _NavigationScreenState extends State<NavigationScreen> {
+  final directions = MapBoxNavigation();
+  double? _distanceRemaining;
+  double? _durationRemaining;
+  bool? _arrived;
+  String? _instruction;
+  bool _routeBuilt = false;
+  bool _isNavigating = false;
+  bool _isMultipleStop = false;
+  Future<void> _onRouteEvent(e) async {
+    _distanceRemaining = await directions.getDistanceRemaining();
+    _durationRemaining = await directions.getDurationRemaining();
+
+    switch (e.eventType) {
+      case MapBoxEvent.progress_change:
+        var progressEvent = e.data as RouteProgressEvent;
+        _arrived = progressEvent.arrived;
+        if (progressEvent.currentStepInstruction != null)
+          _instruction = progressEvent.currentStepInstruction;
+        break;
+      case MapBoxEvent.route_building:
+      case MapBoxEvent.route_built:
+        _routeBuilt = true;
+        break;
+      case MapBoxEvent.route_build_failed:
+        _routeBuilt = false;
+        break;
+      case MapBoxEvent.navigation_running:
+        _isNavigating = true;
+        break;
+      case MapBoxEvent.on_arrival:
+        _arrived = true;
+        if (!_isMultipleStop) {
+          await Future.delayed(Duration(seconds: 3));
+          await directions.finishNavigation();
+        } else {}
+        break;
+      case MapBoxEvent.navigation_finished:
+      case MapBoxEvent.navigation_cancelled:
+        _routeBuilt = false;
+        _isNavigating = false;
+        break;
+      default:
+        break;
+    }
+    setState(() {});
+  }
+
   void startNavigation() async {
-    final directions = MapBoxNavigation();
+    directions.registerRouteEventListener(_onRouteEvent);
+
     final routeOptions = MapBoxOptions(
-      initialLatitude: sourceLat,
-      initialLongitude: sourceLng,
+      initialLatitude: widget.sourceLat,
+      initialLongitude: widget.sourceLng,
       zoom: 16.0,
       tilt: 0.0,
       bearing: 0.0,
-      enableRefresh: false,
+      enableRefresh: true,
       alternatives: true,
       voiceInstructionsEnabled: true,
       bannerInstructionsEnabled: true,
       allowsUTurnAtWayPoints: true,
+      units: VoiceUnits.imperial,
+      simulateRoute: true,
+      animateBuildRoute: true,
+      isOptimized: true,
+      longPressDestinationEnabled: true,
+      showEndOfRouteFeedback: true,
+      showReportFeedbackButton: true,
+      padding: EdgeInsets.all(8),
       mode: MapBoxNavigationMode.drivingWithTraffic,
-      mapStyleUrlDay: 'mapbox://styles/mapbox/streets-v9/',
+      mapStyleUrlDay: 'mapbox://styles/mahmoudhabib/clqy80447012y01o9eqmuavao/',
     );
     directions.setDefaultOptions(routeOptions);
     await directions.startNavigation(
       wayPoints: [
         WayPoint(
           name: "Origin",
-          latitude: sourceLat,
-          longitude: sourceLng,
+          latitude: widget.sourceLat,
+          longitude: widget.sourceLng,
         ),
         WayPoint(
           name: "Destination",
-          latitude: lat,
-          longitude: long,
+          latitude: widget.lat,
+          longitude: widget.long,
         ),
       ],
-      options: MapBoxOptions(
-        mode: MapBoxNavigationMode.drivingWithTraffic,
-        simulateRoute: true,
-        language: Get.locale!.languageCode,
-        units: VoiceUnits.imperial,
-        allowsUTurnAtWayPoints: true,
-        animateBuildRoute: true,
-        alternatives: true,
-        bannerInstructionsEnabled: true,
-        enableRefresh: true,
-        isOptimized: true,
-        showEndOfRouteFeedback: true,
-      ),
+      options: routeOptions,
     );
+  }
+
+  @override
+  void dispose() {
+    directions.finishNavigation();
+
+    super.dispose();
   }
 
   @override
@@ -137,4 +193,3 @@ class NavigationScreen extends StatelessWidget {
     );
   }
 }
-

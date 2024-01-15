@@ -36,7 +36,7 @@ YYDialog orderSuccessDialog(
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(Get.overlayContext!, true);
-                Navigator.pop(context);
+               // Navigator.pop(context);
               },
               child: Text(
                 'back_to_browse'.tr,

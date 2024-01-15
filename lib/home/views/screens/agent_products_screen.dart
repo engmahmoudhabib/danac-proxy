@@ -135,15 +135,15 @@ class AgentProductsScreen extends StatelessWidget {
                                                         .cupertino,
                                               );
                                             },
-                                            child: Card(
-                                              elevation: 5,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
+                                            child: Column(
+                                              children: [
+                                                Card(
+                                                  elevation: 5,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(15.0),
+                                                  ),
+                                                  child: SizedBox(
                                                     height: 153,
                                                     width:
                                                         MediaQuery.of(context)
@@ -168,7 +168,8 @@ class AgentProductsScreen extends StatelessWidget {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                ),
+                                                   SizedBox(
                                                     height: 5,
                                                   ),
                                                   FadeInLeft(
@@ -221,8 +222,7 @@ class AgentProductsScreen extends StatelessWidget {
                                                       ),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                              ],
                                             ),
                                           ),
                                         ),
